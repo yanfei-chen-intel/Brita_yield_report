@@ -1,0 +1,9 @@
+Main executable : ApiSamples.GetXeusTestResult.exe (~110 MB)
+Config files    : krb5.conf, sqlnet.ora (optional)
+Debug symbols   : ApiSamples.GetXeusTestResult.pdb (optional)
+
+# Use default output file
+.\ApiSamples.GetXeusTestResult.exe sample_input.csv
+
+# Specify output file
+.\ApiSamples.GetXeusTestResult.exe sample_input.csv my_output.csv

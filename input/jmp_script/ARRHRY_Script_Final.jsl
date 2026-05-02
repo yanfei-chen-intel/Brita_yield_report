@@ -1,0 +1,198 @@
+//HRY_Data_Analysis
+//Version1_Zhuoliu_20220516
+//Version2_Zhuoliu_20221231 ---add second parts
+
+
+Close All( data tables, nosave );
+Clear Log();
+//Delete Symbols();
+
+
+//dt = Current Data Table();
+dt = open("C:\Users\chenyanf\Downloads\Brita\units_batch.csv");
+
+//Delete column
+For( i = 1, i <= N Col( dt ), i++,
+	col = Column( i );
+	name = col << Get Name();
+	If(
+		Contains( name, "LEVEL0" ) | Contains( name, "LEVEL1" ) | Contains( name, "LEVEL2" ) | Contains( name, "LEVEL3" ) | Contains( name, "LEVEL4" ) |
+		Contains( name, "LEVEL6" ),
+		dt << Delete Columns( name );
+		i = i - 1;
+	);
+	
+);
+
+
+//Stacked Column
+res = dt << Get Column Names( string );
+command_prefix = "stacked_dt = dt << Stack(columns(";
+command_suffix =
+"), Source Label Column( \!"Label\!" ),Output Table( \!"stacked_dt\!" ), Stacked Data Column( \!"Data\!" ), Name( \!"Non-stacked columns\!" ));";
+command_meat = "";
+For( i = 1, i <= Length( res ), i++,
+	r = Regex( res[i], "0*LEVEL5*" );
+	If( !Is Missing( r ),
+		command_meat = command_meat || ":Name( \!"" || res[i] || "\!" ),"
+	);
+);
+command = command_prefix || command_meat || command_suffix;
+Eval( Parse( command ) );
+Wait( 001 );
+
+
+Sum1 =stacked_dt << Summary(
+	Group( :Label, :Data ),
+	Freq( "None" ),
+	Weight( "None" ),
+	Output Table( "Sum1" ),
+	Link to original data table( 0 ),
+);
+
+
+Split1=Sum1 << Split(
+	Split By( :Data ),
+	Split( :N Rows ),
+	Group( :Label ),
+	Link to original data table( 0 ),
+	Sort by Column Property
+);
+
+
+
+colNames = Split1 << get column names;
+
+For( theCol = 1, thecol <= N Items( colNames ), theCol++,
+	For( theRow = 1, theRow <= N Rows( Split1 ), theRow++,
+		If( is missing (Column( Split1, theCol )[theRow]),
+			Column( Split1, theCol )[theRow] = 0
+		)
+	)
+);
+
+Split1 << Text To Columns( delimiter( "_" ), columns( :Label ) );
+column("Label 8") << Data Type( Numeric );
+column("Label 8") << Set Modeling Type( Continuous);
+
+//Split1 << New Column( "Yield", Numeric, Continuous);
+
+
+// Second part
+
+
+//delete column of DFT-FAIL and FASTRASTER-FAIL
+For( i = 1, i <= N Col( Split1 ), i++,
+	col = Column( i );
+	name = col << Get Name();
+	If(
+		Contains( name, "DFT" ) | Contains( name, "FASTRASTER" ),
+		Split1 << Delete Columns( name );
+		i = i - 1;
+	);
+	
+);
+
+
+Try(
+		
+	cList = Split1 << get column names( string );
+	For( i = 1, i <= N Items( cList ), i++,
+		If( Contains( cList[i], "-" ),
+			Column( Split1, cList[i] ) << set name(Substitute( cList[i], "-", "_" ))
+		)
+	);
+);
+
+
+Xlist = "";
+
+For( i = 1, i <= N Cols( Split1 ), i++,
+	If(
+		Ends With( column(Split1,i) << get name, "FAIL" ) > 0, Xlist=Xlist || ":" ||  char(column(Split1,i) << get name) || ",",
+	)
+);
+
+eval(parse("Split1 << New Column( \!"Fail_Total_Count\!", Numeric, Continuous, Formula( Sum( "||Xlist||") ) );"));
+
+// yield 
+
+Split1 << New Column( "PreScreen_Yield", Numeric, Formula(:PASS/(:PASS + :Fail_Total_Count)));
+
+
+Try (
+Split1 << New Column( "PostScreen_Yield", Numeric, Formula((:PASS + :REPAIRABLE_FAIL)/(:PASS +:Fail_Total_Count )));
+);
+
+//Fit_Y_by_X step1
+
+Split1<<Bivariate(
+	Y( :PostScreen_Yield ),
+	X( :PreScreen_Yield ),
+	Fit Special( Intercept( 0 ), Slope( 1 ), {Line Color( {212, 73, 88} )} )
+);
+
+
+Split2=Split1 << Stack(
+	columns( :Name( "PreScreen_Yield" ), :Name( "PostScreen_Yield" ) ),
+	Source Label Column( "Label" ),
+	Stacked Data Column( "Data" )
+);
+
+
+Column( Split2, "Label 8" ) << set name( "BTIS-ARRAY-SIZES" );
+
+// Save Split1 and Split2 to JRN files
+Split1 << Save( "C:\Users\chenyanf\Downloads\Brita\Split1.jrn" );
+
+
+
+//Fit_Y_by_X step2
+
+
+Split2<<Bivariate(
+	Y( :Data ),
+	X( :Name( "BTIS-ARRAY-SIZES" ) ),
+	Fit Where(
+		:Label 9 == "PostScreen_Yield",
+		Fit Line( {Line Color( {212, 73, 88} )} )
+	),
+	Fit Where(
+		:Label 9 == "PreScreen_Yield",
+		Fit Line( {Line Color( {66, 112, 221} )} )
+	),
+	SendToReport(
+		Dispatch(
+			{},
+			"1",
+			ScaleBox,
+			{Scale( "Log" )}
+		),
+		Dispatch(
+			{},
+			"Bivar Plot",
+			FrameBox,
+			{Row Legend(
+				Label 9,
+				Color( 1 ),
+				Color Theme( "JMP Default" ),
+				Marker( 0 ),
+				Marker Theme( "" ),
+				Continuous Scale( 0 ),
+				Reverse Scale( 0 ),
+				Excluded Rows( 0 )
+			), Row Legend(
+				Label 4,
+				Color( 1 ),
+				Color Theme( "JMP Default" ),
+				Marker( 1 ),
+				Marker Theme( "Standard" ),
+				Continuous Scale( 0 ),
+				Reverse Scale( 0 ),
+				Excluded Rows( 0 )
+			)}
+		)
+	)
+);
+
+Split2 << Save( "C:\Users\chenyanf\Downloads\Brita\Split2.jrn" );

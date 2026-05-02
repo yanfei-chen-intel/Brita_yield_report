@@ -1,0 +1,8 @@
+
+
+pandas>=1.5.0
+openpyxl>=3.0.10
+pywin32
+
+# PyUber - Intel internal package
+git+https://github.com/intel-innersource/applications.manufacturing.intel.yield.pyuber@v2.3.1

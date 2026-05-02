@@ -1,0 +1,7 @@
+{
+  "indicator_file": "bmgg31_brita_type2_indicator_arraygt.xml",
+  "jsl_file": "ARRHRY_Script_Final.jsl",
+  "check_period": 10,
+  "check_count": null,
+  "_check_count_comment": "Number of query retries. Set to null for unlimited retries until all lots are found."
+}
