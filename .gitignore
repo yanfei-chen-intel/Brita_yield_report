@@ -4,10 +4,6 @@ output/
 # Virtual environment
 venv/
 
-# Large binary - distribute separately
-GetXeusTestResult/ApiSamples.GetXeusTestResult.exe
-GetXeusTestResult/ApiSamples.GetXeusTestResult.pdb
-
 # Python cache
 __pycache__/
 *.pyc
