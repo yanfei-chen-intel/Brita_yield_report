@@ -1,4 +1,4 @@
-# Yield Automation Tool
+# Brita Yield Automation Tool
 
 Automates the full yield analysis pipeline:
 
