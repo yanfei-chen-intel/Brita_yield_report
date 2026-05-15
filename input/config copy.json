@@ -4,11 +4,22 @@
   "check_count": null,
   "_check_count_comment": "Number of query retries. Set to null for unlimited retries until all lots are found.",
   "tasks": [
-  {
+    {
       "name": "ARRGT",
       "indicator_file": "bmgg31_brita_type2_indicator_arraygt.xml",
       "script": "ARRHRY_Script_Final.jsl"
+    },
+    {
+      "name": "MBIST",
+      "indicator_file": "MBIST_G31.xml",
+      "script": "Brita_MBIST.py"
+    },
+    {
+      "name": "SOC_SCAN",
+      "indicator_file": "brita_type2_indicator_soc_scan_g31.xml",
+      "script": "Brita_BMG.py"
     }
+
   ]
 
 }

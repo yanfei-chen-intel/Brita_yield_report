@@ -1,0 +1,137 @@
+Names Default To Here( 1 );
+
+Close All( Data Tables, NoSave );
+Clear Log();
+
+input_file = "..\output\SOC_SCAN\SOC_SCAN_units_batch_summary.csv";
+output_file = "..\output\SOC_SCAN\HRY_soc_scan.csv";
+
+dt = Open( input_file );
+
+keys = {};
+pass_sum = Associative Array();
+tested_sum = Associative Array();
+qty_sum = Associative Array();
+
+extract_partition = Function( {indicator_raw},
+	parts = Words( indicator_raw, "::" );
+	part_name = "";
+
+	// Python logic:
+	// 1) if '::NOM::' exists -> use split('::')[4]
+	// 2) if contains '::DDR::16G/18G/14G/20G/19G::' -> use split('::')[3] + '::' + split('::')[4]
+	If( Contains( indicator_raw, "::NOM::" ) & N Items( parts ) >= 5,
+		part_name = parts[5];
+	,
+		If(
+			Contains( indicator_raw, "::DDR::16G::" ) |
+			Contains( indicator_raw, "::DDR::18G::" ) |
+			Contains( indicator_raw, "::DDR::14G::" ) |
+			Contains( indicator_raw, "::DDR::20G::" ) |
+			Contains( indicator_raw, "::DDR::19G::" ),
+			If( N Items( parts ) >= 5,
+				part_name = parts[4] || "::" || parts[5];
+			);
+		);
+	);
+
+	part_name;
+);
+
+For( r = 1, r <= N Rows( dt ), r++,
+	// In this CSV, LATEST is populated in WSSN (Filter is often empty).
+	filter_val = Char( Column( dt, "WSSN" )[r] );
+	level_val = Num( Column( dt, "Level" )[r] );
+	result_val = Char( Column( dt, "Result" )[r] );
+	impact_val = Char( Column( dt, "%Impact_on_Tested_no_Untested" )[r] );
+
+	If( filter_val != "LATEST" | Is Missing( level_val ) | level_val != 6 | result_val != "PASS",
+		Continue();
+	);
+
+	If( Is Missing( impact_val ) | impact_val == "NaN",
+		Continue();
+	);
+
+	indicator_raw = Char( Column( dt, "Indicator" )[r] );
+	partition_name = extract_partition( indicator_raw );
+	indicator_key = "";
+
+	If( partition_name == "",
+		Continue();
+	);
+
+	If( Contains( indicator_raw, "::ATPG" ),
+		indicator_key = partition_name || "_ATPG";
+	,
+		If( Contains( indicator_raw, "TATPG" ),
+			indicator_key = partition_name || "_TATPG";
+		,
+			Continue();
+		)
+	);
+
+	If( !Contains( keys, indicator_key ),
+		Insert Into( keys, indicator_key );
+		pass_sum[indicator_key] = 0;
+		tested_sum[indicator_key] = 0;
+		qty_sum[indicator_key] = 0;
+	);
+
+	pass_sum[indicator_key] = pass_sum[indicator_key] + Num( Column( dt, "Die_Per_Wafer" )[r] );
+	tested_sum[indicator_key] = tested_sum[indicator_key] + Num( Column( dt, "Die_Tested" )[r] );
+	qty_sum[indicator_key] = qty_sum[indicator_key] + Num( Column( dt, "Die_Tested_no_Untested" )[r] );
+);
+
+out = New Table( "HRY_soc_scan",
+	New Column( "WAFER", Character, Nominal ),
+	New Column( "Indicator", Character, Nominal ),
+	New Column( "Passing Unit", Numeric, Continuous ),
+	New Column( "Die_Tested", Numeric, Continuous ),
+	New Column( "Unit QTY", Numeric, Continuous ),
+	New Column( "Yield", Numeric, Continuous, Format( "Fixed Dec", 12, 2 ) )
+);
+
+For( i = 1, i <= N Items( keys ), i++,
+	k = keys[i];
+	If( qty_sum[k] <= 0,
+		Continue();
+	);
+
+	yield_val = (pass_sum[k] / qty_sum[k]) * 100;
+
+	out << Add Rows( 1 );
+	row_id = N Rows( out );
+	Column( out, "WAFER" )[row_id] = "ALL";
+	Column( out, "Indicator" )[row_id] = k;
+	Column( out, "Passing Unit" )[row_id] = pass_sum[k];
+	Column( out, "Die_Tested" )[row_id] = tested_sum[k];
+	Column( out, "Unit QTY" )[row_id] = qty_sum[k];
+	Column( out, "Yield" )[row_id] = yield_val;
+);
+
+out = out << Sort( By( :Yield ), Order( Ascending ), Replace Table( 1 ) );
+
+// Mark rows with Yield < 99% in red
+out << select where( :Yield < 99 );
+out << color selected rows( {212, 73, 88} );
+out << deselect rows();
+
+// Save as CSV (for downstream use) and as JMP (preserves row colors)
+out << Save( output_file );
+out << Save( "..\output\SOC_SCAN\HRY_soc_scan.jmp" );
+
+YieldWin = New Window( "SOC_SCAN Yield Plot", <<Journal );
+
+YieldWin << Append(
+Graph Builder(
+	Size( 1100, 600 ),
+	Variables( X( :Indicator ), Y( :Yield ) ),
+	Elements(
+		Box Plot( X, Y, Legend( 5 ), Outliers( 1 ) ),
+		Points( X, Y, Legend( 6 ) )
+	)
+)
+);
+
+YieldWin << Save Journal( "..\output\SOC_SCAN\SOC_SCAN_Yield_Plot.jrn" );

@@ -1,0 +1,2265 @@
+<?xml version="1.0" encoding="utf-8"?>
+<BinConfiguration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="TestConfiguration" type="Flow">
+  <TestProgram name="" />
+  <DefaultRules>
+    <Rule value="FAIL" logic="OR">x(FAIL)</Rule>
+    <Rule value="PASS" logic="AND">x(PASS)</Rule>
+    <Rule value="UNTESTED" logic="OR">x(UNTESTED)</Rule>
+  </DefaultRules>
+  <Group tag="SOC-SCAN" print="true">
+    <DefaultRules>
+      <Rule value="RESET" logic="OR">x(RESET)</Rule>
+      <Rule value="CHAIN" logic="OR">x(CHAIN)</Rule>
+      <Rule value="ATPG" logic="OR">x(ATPG)</Rule>
+      <Rule value="TATPG" logic="OR">x(TATPG)</Rule>
+      <Rule value="PASS" logic="AND">x(PASS)</Rule>
+      <Rule value="UNTESTED" logic="OR">x(UNTESTED)</Rule>
+    </DefaultRules>
+    <Group tag="NONRECOVERABLE" print="true">
+      <Group tag="AFM" print="true">
+        <Group tag="NOM" print="true">
+          <Group tag="AFMN00L" print="true">
+            <Group tag="443540" print="true">
+              <Rule value="RESET">CHAIN-443540(RESET) OR ATPG-443540(RESET) OR TATPG-443540(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-443540(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-443540(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-443540(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-443540(PASS) OR ATPG-443540(PASS) OR TATPG-443540(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-443540(UNTESTED) AND ATPG-443540(UNTESTED) AND TATPG-443540(UNTESTED)</Rule>
+              <Group tag="CHAIN-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN00L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="AFMN01L" print="true">
+            <Group tag="443540" print="true">
+              <Rule value="RESET">CHAIN-443540(RESET) OR ATPG-443540(RESET) OR TATPG-443540(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-443540(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-443540(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-443540(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-443540(PASS) OR ATPG-443540(PASS) OR TATPG-443540(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-443540(UNTESTED) AND ATPG-443540(UNTESTED) AND TATPG-443540(UNTESTED)</Rule>
+              <Group tag="CHAIN-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN01L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="AFMN20R" print="true">
+            <Group tag="443540" print="true">
+              <Rule value="RESET">CHAIN-443540(RESET) OR ATPG-443540(RESET) OR TATPG-443540(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-443540(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-443540(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-443540(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-443540(PASS) OR ATPG-443540(PASS) OR TATPG-443540(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-443540(UNTESTED) AND ATPG-443540(UNTESTED) AND TATPG-443540(UNTESTED)</Rule>
+              <Group tag="CHAIN-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN20R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="AFMN21R" print="true">
+            <Group tag="443540" print="true">
+              <Rule value="RESET">CHAIN-443540(RESET) OR ATPG-443540(RESET) OR TATPG-443540(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-443540(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-443540(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-443540(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-443540(PASS) OR ATPG-443540(PASS) OR TATPG-443540(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-443540(UNTESTED) AND ATPG-443540(UNTESTED) AND TATPG-443540(UNTESTED)</Rule>
+              <Group tag="CHAIN-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-443540" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_AFMN21R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+        </Group>
+      </Group>
+      <Group tag="FABLR" print="true">
+        <Group tag="NOM" print="true">
+          <Group tag="FABLEFTV2L" print="true">
+            <Group tag="42764" print="true">
+              <Rule value="RESET">CHAIN-42764(RESET) OR ATPG-42764(RESET) OR TATPG-42764(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-42764(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-42764(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-42764(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-42764(PASS) OR ATPG-42764(PASS) OR TATPG-42764(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-42764(UNTESTED) AND ATPG-42764(UNTESTED) AND TATPG-42764(UNTESTED)</Rule>
+              <Group tag="CHAIN-42764" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="4" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+              <Group tag="ATPG-42764" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+              <Group tag="TATPG-42764" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="FABLEFTV1L" print="true">
+            <Group tag="51397" print="true">
+              <Rule value="RESET">CHAIN-51397(RESET) OR ATPG-51397(RESET) OR TATPG-51397(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-51397(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-51397(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-51397(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-51397(PASS) OR ATPG-51397(PASS) OR TATPG-51397(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-51397(UNTESTED) AND ATPG-51397(UNTESTED) AND TATPG-51397(UNTESTED)</Rule>
+              <Group tag="CHAIN-51397" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-51397" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-51397" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="FABLEFTHL" print="true">
+            <Group tag="53757" print="true">
+              <Rule value="RESET">CHAIN-53757(RESET) OR ATPG-53757(RESET) OR TATPG-53757(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-53757(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-53757(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-53757(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-53757(PASS) OR ATPG-53757(PASS) OR TATPG-53757(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-53757(UNTESTED) AND ATPG-53757(UNTESTED) AND TATPG-53757(UNTESTED)</Rule>
+              <Group tag="CHAIN-53757" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="5" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+              <Group tag="ATPG-53757" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+              <Group tag="TATPG-53757" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="FABLEFTVL" print="true">
+            <Group tag="44551" print="true">
+              <Rule value="RESET">CHAIN-44551(RESET) OR ATPG-44551(RESET) OR TATPG-44551(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-44551(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-44551(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-44551(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-44551(PASS) OR ATPG-44551(PASS) OR TATPG-44551(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-44551(UNTESTED) AND ATPG-44551(UNTESTED) AND TATPG-44551(UNTESTED)</Rule>
+              <Group tag="CHAIN-44551" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="3" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+              <Group tag="ATPG-44551" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+              <Group tag="TATPG-44551" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="FABRIGHTHR" print="true">
+            <Group tag="50154" print="true">
+              <Rule value="RESET">CHAIN-50154(RESET) OR ATPG-50154(RESET) OR TATPG-50154(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-50154(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-50154(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-50154(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-50154(PASS) OR ATPG-50154(PASS) OR TATPG-50154(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-50154(UNTESTED) AND ATPG-50154(UNTESTED) AND TATPG-50154(UNTESTED)</Rule>
+              <Group tag="CHAIN-50154" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTHR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTHR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTHR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-50154" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTHR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTHR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTHR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-50154" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="FABRIGHTV2R" print="true">
+            <Group tag="35106" print="true">
+              <Rule value="RESET">CHAIN-35106(RESET) OR ATPG-35106(RESET) OR TATPG-35106(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-35106(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-35106(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-35106(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-35106(PASS) OR ATPG-35106(PASS) OR TATPG-35106(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-35106(UNTESTED) AND ATPG-35106(UNTESTED) AND TATPG-35106(UNTESTED)</Rule>
+              <Group tag="CHAIN-35106" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV2R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV2R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV2R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-35106" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV2R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV2R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV2R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-35106" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="7" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="FABRIGHTV1R" print="true">
+            <Group tag="40660" print="true">
+              <Rule value="RESET">CHAIN-40660(RESET) OR ATPG-40660(RESET) OR TATPG-40660(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-40660(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-40660(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-40660(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-40660(PASS) OR ATPG-40660(PASS) OR TATPG-40660(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-40660(UNTESTED) AND ATPG-40660(UNTESTED) AND TATPG-40660(UNTESTED)</Rule>
+              <Group tag="CHAIN-40660" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-40660" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTV1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-40660" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="FABRIGHTVR" print="true">
+            <Group tag="41860" print="true">
+              <Rule value="RESET">CHAIN-41860(RESET) OR ATPG-41860(RESET) OR TATPG-41860(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-41860(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-41860(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-41860(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-41860(PASS) OR ATPG-41860(PASS) OR TATPG-41860(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-41860(UNTESTED) AND ATPG-41860(UNTESTED) AND TATPG-41860(UNTESTED)</Rule>
+              <Group tag="CHAIN-41860" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTVR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTVR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTVR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-41860" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTVR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTVR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABRIGHTVR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-41860" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+        </Group>
+      </Group>
+      <Group tag="FABEWN" print="true">
+        <Group tag="NOM" print="true">
+          <Group tag="WESTFAB1L" print="true">
+            <Group tag="78303" print="true">
+              <Rule value="RESET">CHAIN-78303(RESET) OR ATPG-78303(RESET) OR TATPG-78303(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-78303(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-78303(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-78303(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-78303(PASS) OR ATPG-78303(PASS) OR TATPG-78303(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-78303(UNTESTED) AND ATPG-78303(UNTESTED) AND TATPG-78303(UNTESTED)</Rule>
+              <Group tag="CHAIN-78303" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="9" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="9" format="BIN" />
+              </Group>
+              <Group tag="ATPG-78303" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="9" format="BIN" />
+              </Group>
+              <Group tag="TATPG-78303" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="9" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="EASTFAB1R" print="true">
+            <Group tag="51940" print="true">
+              <Rule value="RESET">CHAIN-51940(RESET) OR ATPG-51940(RESET) OR TATPG-51940(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-51940(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-51940(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-51940(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-51940(PASS) OR ATPG-51940(PASS) OR TATPG-51940(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-51940(UNTESTED) AND ATPG-51940(UNTESTED) AND TATPG-51940(UNTESTED)</Rule>
+              <Group tag="CHAIN-51940" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFAB1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFAB1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFAB1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-51940" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFAB1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFAB1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFAB1R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-51940" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="EASTFABR" print="true">
+            <Group tag="43724" print="true">
+              <Rule value="RESET">CHAIN-43724(RESET) OR ATPG-43724(RESET) OR TATPG-43724(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-43724(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-43724(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-43724(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-43724(PASS) OR ATPG-43724(PASS) OR TATPG-43724(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-43724(UNTESTED) AND ATPG-43724(UNTESTED) AND TATPG-43724(UNTESTED)</Rule>
+              <Group tag="CHAIN-43724" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-43724" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_EASTFABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-43724" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABR_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="NORTHFAB1L" print="true">
+            <Group tag="10377" print="true">
+              <Rule value="RESET">CHAIN-10377(RESET) OR ATPG-10377(RESET) OR TATPG-10377(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-10377(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-10377(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-10377(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-10377(PASS) OR ATPG-10377(PASS) OR TATPG-10377(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-10377(UNTESTED) AND ATPG-10377(UNTESTED) AND TATPG-10377(UNTESTED)</Rule>
+              <Group tag="CHAIN-10377" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="10" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="10" format="BIN" />
+              </Group>
+              <Group tag="ATPG-10377" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="10" format="BIN" />
+              </Group>
+              <Group tag="TATPG-10377" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="10" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="NORTHFABL" print="true">
+            <Group tag="270542" print="true">
+              <Rule value="RESET">CHAIN-270542(RESET) OR ATPG-270542(RESET) OR TATPG-270542(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-270542(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-270542(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-270542(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-270542(PASS) OR ATPG-270542(PASS) OR TATPG-270542(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-270542(UNTESTED) AND ATPG-270542(UNTESTED) AND TATPG-270542(UNTESTED)</Rule>
+              <Group tag="CHAIN-270542" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="8" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="8" format="BIN" />
+              </Group>
+              <Group tag="ATPG-270542" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="8" format="BIN" />
+              </Group>
+              <Group tag="TATPG-270542" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="8" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="WESTFABL" print="true">
+            <Group tag="64602" print="true">
+              <Rule value="RESET">CHAIN-64602(RESET) OR ATPG-64602(RESET) OR TATPG-64602(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-64602(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-64602(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-64602(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-64602(PASS) OR ATPG-64602(PASS) OR TATPG-64602(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-64602(UNTESTED) AND ATPG-64602(UNTESTED) AND TATPG-64602(UNTESTED)</Rule>
+              <Group tag="CHAIN-64602" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="6" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+              <Group tag="ATPG-64602" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+              <Group tag="TATPG-64602" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+        </Group>
+      </Group>
+      <Group tag="MISC" print="true">
+        <Group tag="NOM" print="true">
+          <Group tag="AUDIOL" print="true">
+            <Group tag="62597" print="true">
+              <Rule value="RESET">CHAIN-62597(RESET) OR ATPG-62597(RESET) OR TATPG-62597(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-62597(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-62597(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-62597(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-62597(PASS) OR ATPG-62597(PASS) OR TATPG-62597(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-62597(UNTESTED) AND ATPG-62597(UNTESTED) AND TATPG-62597(UNTESTED)</Rule>
+              <Group tag="CHAIN-62597" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_AUDIOL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_AUDIOL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_AUDIOL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-62597" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_AUDIOL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_AUDIOL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_AUDIOL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-62597" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_STKGRP1L_HRY_K_END_SSN_X_NOM_LFM_GRP_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_STKGRP1L_HRY_K_END_SSN_X_NOM_LFM_GRP_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_STKGRP1L_HRY_K_END_SSN_X_NOM_LFM_GRP_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_STKGRP1L_HRY_K_END_SSN_X_NOM_LFM_GRP_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_STKGRP1L_HRY_K_END_SSN_X_NOM_LFM_GRP_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="CCUL" print="true">
+            <Group tag="10193" print="true">
+              <Rule value="RESET">CHAIN-10193(RESET) OR ATPG-10193(RESET) OR TATPG-10193(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-10193(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-10193(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-10193(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-10193(PASS) OR ATPG-10193(PASS) OR TATPG-10193(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-10193(UNTESTED) AND ATPG-10193(UNTESTED) AND TATPG-10193(UNTESTED)</Rule>
+              <Group tag="CHAIN-10193" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_CCUL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_CCUL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_CCUL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-10193" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_CCUL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_CCUL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_CCUL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-10193" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_STKGRP1L_HRY_K_END_SSN_X_NOM_LFM_GRP_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_STKGRP1L_HRY_K_END_SSN_X_NOM_LFM_GRP_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_STKGRP1L_HRY_K_END_SSN_X_NOM_LFM_GRP_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_STKGRP1L_HRY_K_END_SSN_X_NOM_LFM_GRP_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_STKGRP1L_HRY_K_END_SSN_X_NOM_LFM_GRP_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="FUSEGPIOL" print="true">
+            <Group tag="74088" print="true">
+              <Rule value="RESET">CHAIN-74088(RESET) OR ATPG-74088(RESET) OR TATPG-74088(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-74088(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-74088(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-74088(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-74088(PASS) OR ATPG-74088(PASS) OR TATPG-74088(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-74088(UNTESTED) AND ATPG-74088(UNTESTED) AND TATPG-74088(UNTESTED)</Rule>
+              <Group tag="CHAIN-74088" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="7" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="7" format="BIN" />
+              </Group>
+              <Group tag="ATPG-74088" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="7" format="BIN" />
+              </Group>
+              <Group tag="TATPG-74088" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_FABL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="7" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="GSCSAMISCL" print="true">
+            <Group tag="183106" print="true">
+              <Rule value="RESET">CHAIN-183106(RESET) OR ATPG-183106(RESET) OR TATPG-183106(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-183106(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-183106(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-183106(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-183106(PASS) OR ATPG-183106(PASS) OR TATPG-183106(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-183106(UNTESTED) AND ATPG-183106(UNTESTED) AND TATPG-183106(UNTESTED)</Rule>
+              <Group tag="CHAIN-183106" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-183106" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-183106" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_GSCSAMISCL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PSF0L" print="true">
+            <Group tag="145780" print="true">
+              <Rule value="RESET">CHAIN-145780(RESET) OR ATPG-145780(RESET) OR TATPG-145780(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-145780(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-145780(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-145780(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-145780(PASS) OR ATPG-145780(PASS) OR TATPG-145780(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-145780(UNTESTED) AND ATPG-145780(UNTESTED) AND TATPG-145780(UNTESTED)</Rule>
+              <Group tag="CHAIN-145780" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-145780" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-145780" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_PSF0L_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PSFNPKL" print="true">
+            <Group tag="515997" print="true">
+              <Rule value="RESET">CHAIN-515997(RESET) OR ATPG-515997(RESET) OR TATPG-515997(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-515997(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-515997(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-515997(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-515997(PASS) OR ATPG-515997(PASS) OR TATPG-515997(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-515997(UNTESTED) AND ATPG-515997(UNTESTED) AND TATPG-515997(UNTESTED)</Rule>
+              <Group tag="CHAIN-515997" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-515997" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-515997" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_PSFNPKL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PUNITL" print="true">
+            <Group tag="131185" print="true">
+              <Rule value="RESET">CHAIN-131185(RESET) OR ATPG-131185(RESET) OR TATPG-131185(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-131185(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-131185(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-131185(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-131185(PASS) OR ATPG-131185(PASS) OR TATPG-131185(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-131185(UNTESTED) AND ATPG-131185(UNTESTED) AND TATPG-131185(UNTESTED)</Rule>
+              <Group tag="CHAIN-131185" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-131185" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-131185" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_PUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="SGUNITL" print="true">
+            <Group tag="393231" print="true">
+              <Rule value="RESET">CHAIN-393231(RESET) OR ATPG-393231(RESET) OR TATPG-393231(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-393231(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-393231(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-393231(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-393231(PASS) OR ATPG-393231(PASS) OR TATPG-393231(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-393231(UNTESTED) AND ATPG-393231(UNTESTED) AND TATPG-393231(UNTESTED)</Rule>
+              <Group tag="CHAIN-393231" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0) OR HRY2(0)</Rule>
+                <Rule value="PASS">HRY(1) AND HRY2(1)</Rule>
+                <Rule value="IGNORE">HRY(9) OR HRY2(9)</Rule>
+                <Rule value="UNTESTED">HRY(x) OR HRY2(X)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="" bitloc="2" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY2" expected_value="-99" token="SCN_SOC::STUCKAT_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-393231" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::STUCKAT_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::STUCKAT_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-393231" print="true">
+                <Rule value="RESET">RESET-PRE(0) OR RESET-POST(0) OR RESET-PRE2(0) OR RESET-POST2(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="RESET-PRE" expected_value="-99" token="SCN_SOC::ATSPEED_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST" expected_value="-99" token="SCN_SOC::ATSPEED_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="RESET-PRE2" expected_value="-99" token="SCN_SOC::ATSPEED_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="0" format="BIN" />
+                <HRYItem tag="RESET-POST2" expected_value="-99" token="SCN_SOC::ATSPEED_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_SGUNITL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+        </Group>
+      </Group>
+    </Group>
+    <Group tag="RECOVERABLE" print="true">
+      <Group tag="DISP" print="true">
+        <Group tag="NOM" print="true">
+          <Group tag="DISPPHYL" print="true">
+            <Group tag="312354" print="true">
+              <Rule value="RESET">CHAIN-312354(RESET) OR ATPG-312354(RESET) OR TATPG-312354(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-312354(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-312354(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-312354(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-312354(PASS) OR ATPG-312354(PASS) OR TATPG-312354(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-312354(UNTESTED) AND ATPG-312354(UNTESTED) AND TATPG-312354(UNTESTED)</Rule>
+              <Group tag="CHAIN-312354" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_DISPPHYL_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="ATPG-312354" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_DISPPHYL_HRY_K_END_SSN_X_NOM_LFM_REC_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="TATPG-312354" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_DISPPHYL_HRY_K_END_SSN_X_NOM_LFM_REC_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+        </Group>
+      </Group>
+      <Group tag="PCIE" print="true">
+        <Group tag="NOM" print="true">
+          <Group tag="PCIE4RPH01" print="true">
+            <Group tag="1105634" print="true">
+              <Rule value="RESET">CHAIN-1105634(RESET) OR ATPG-1105634(RESET) OR TATPG-1105634(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-1105634(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-1105634(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-1105634(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-1105634(PASS) OR ATPG-1105634(PASS) OR TATPG-1105634(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-1105634(UNTESTED) AND ATPG-1105634(UNTESTED) AND TATPG-1105634(UNTESTED)</Rule>
+              <Group tag="CHAIN-1105634" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_PCIE4RPH01_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="ATPG-1105634" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_PCIE4RPH01_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="TATPG-1105634" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_PCIE4RPH01_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PCIE4RPH0" print="true">
+            <Group tag="1105634" print="true">
+              <Rule value="RESET">CHAIN-1105634(RESET) OR ATPG-1105634(RESET) OR TATPG-1105634(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-1105634(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-1105634(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-1105634(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-1105634(PASS) OR ATPG-1105634(PASS) OR TATPG-1105634(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-1105634(UNTESTED) AND ATPG-1105634(UNTESTED) AND TATPG-1105634(UNTESTED)</Rule>
+              <Group tag="CHAIN-1105634" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_PCIE4R_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="ATPG-1105634" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_PCIE4RPH0_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="TATPG-1105634" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_PCIE4RPH0_HRY_K_END_SSN_X_NOM_LFM_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+        </Group>
+      </Group>
+      <Group tag="DDR" print="true">
+        <Group tag="19G" print="true">
+          <Group tag="PAR-MC-DDR-H0" print="true">
+            <Group tag="690573" print="true">
+              <Rule value="RESET">CHAIN-690573(RESET) OR ATPG-690573(RESET) OR TATPG-690573(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-690573(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-690573(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-690573(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-690573(PASS) OR ATPG-690573(PASS) OR TATPG-690573(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-690573(UNTESTED) AND ATPG-690573(UNTESTED) AND TATPG-690573(UNTESTED)</Rule>
+              <Group tag="CHAIN-690573" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="ATPG-690573" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="TATPG-690573" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V1" print="true">
+            <Group tag="690593" print="true">
+              <Rule value="RESET">CHAIN-690593(RESET) OR ATPG-690593(RESET) OR TATPG-690593(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-690593(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-690593(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-690593(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-690593(PASS) OR ATPG-690593(PASS) OR TATPG-690593(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-690593(UNTESTED) AND ATPG-690593(UNTESTED) AND TATPG-690593(UNTESTED)</Rule>
+              <Group tag="CHAIN-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-H2" print="true">
+            <Group tag="690573" print="true">
+              <Rule value="RESET">CHAIN-690573(RESET) OR ATPG-690573(RESET) OR TATPG-690573(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-690573(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-690573(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-690573(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-690573(PASS) OR ATPG-690573(PASS) OR TATPG-690573(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-690573(UNTESTED) AND ATPG-690573(UNTESTED) AND TATPG-690573(UNTESTED)</Rule>
+              <Group tag="CHAIN-690573" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+              <Group tag="ATPG-690573" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+              <Group tag="TATPG-690573" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V3" print="true">
+            <Group tag="690593" print="true">
+              <Rule value="RESET">CHAIN-690593(RESET) OR ATPG-690593(RESET) OR TATPG-690593(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-690593(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-690593(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-690593(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-690593(PASS) OR ATPG-690593(PASS) OR TATPG-690593(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-690593(UNTESTED) AND ATPG-690593(UNTESTED) AND TATPG-690593(UNTESTED)</Rule>
+              <Group tag="CHAIN-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+              <Group tag="ATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+              <Group tag="TATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V4" print="true">
+            <Group tag="690593" print="true">
+              <Rule value="RESET">CHAIN-690593(RESET) OR ATPG-690593(RESET) OR TATPG-690593(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-690593(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-690593(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-690593(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-690593(PASS) OR ATPG-690593(PASS) OR TATPG-690593(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-690593(UNTESTED) AND ATPG-690593(UNTESTED) AND TATPG-690593(UNTESTED)</Rule>
+              <Group tag="CHAIN-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+              <Group tag="ATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+              <Group tag="TATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V5" print="true">
+            <Group tag="690593" print="true">
+              <Rule value="RESET">CHAIN-690593(RESET) OR ATPG-690593(RESET) OR TATPG-690593(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-690593(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-690593(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-690593(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-690593(PASS) OR ATPG-690593(PASS) OR TATPG-690593(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-690593(UNTESTED) AND ATPG-690593(UNTESTED) AND TATPG-690593(UNTESTED)</Rule>
+              <Group tag="CHAIN-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+              <Group tag="ATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+              <Group tag="TATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V6" print="true">
+            <Group tag="690593" print="true">
+              <Rule value="RESET">CHAIN-690593(RESET) OR ATPG-690593(RESET) OR TATPG-690593(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-690593(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-690593(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-690593(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-690593(PASS) OR ATPG-690593(PASS) OR TATPG-690593(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-690593(UNTESTED) AND ATPG-690593(UNTESTED) AND TATPG-690593(UNTESTED)</Rule>
+              <Group tag="CHAIN-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="7" format="BIN" />
+              </Group>
+              <Group tag="ATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="7" format="BIN" />
+              </Group>
+              <Group tag="TATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="7" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V7" print="true">
+            <Group tag="690593" print="true">
+              <Rule value="RESET">CHAIN-690593(RESET) OR ATPG-690593(RESET) OR TATPG-690593(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-690593(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-690593(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-690593(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-690593(PASS) OR ATPG-690593(PASS) OR TATPG-690593(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-690593(UNTESTED) AND ATPG-690593(UNTESTED) AND TATPG-690593(UNTESTED)</Rule>
+              <Group tag="CHAIN-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="8" format="BIN" />
+              </Group>
+              <Group tag="ATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="8" format="BIN" />
+              </Group>
+              <Group tag="TATPG-690593" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="8" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+        </Group>
+        <Group tag="16G" print="true">
+          <Group tag="PAR-MC-DDR-H0" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-H1" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-H2" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-H3" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V4" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V5" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_16G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+        </Group>
+        <Group tag="14G" print="true">
+          <Group tag="PAR-MC-DDR-H0" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-H1" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-H2" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-H3" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V4" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V5" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_14G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+        </Group>
+        <Group tag="20G" print="true">
+          <Group tag="PAR-MC-DDR-H0" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="1" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-H1" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="2" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-H2" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="3" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-H3" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="4" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V4" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="5" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+          <Group tag="PAR-MC-DDR-V5" print="true">
+            <Group tag="693537" print="true">
+              <Rule value="RESET">CHAIN-693537(RESET) OR ATPG-693537(RESET) OR TATPG-693537(RESET)</Rule>
+              <Rule value="CHAIN">CHAIN-693537(FAIL)</Rule>
+              <Rule value="ATPG">ATPG-693537(FAIL)</Rule>
+              <Rule value="TATPG">TATPG-693537(FAIL)</Rule>
+              <Rule value="PASS">CHAIN-693537(PASS) OR ATPG-693537(PASS) OR TATPG-693537(PASS)</Rule>
+              <Rule value="UNTESTED">CHAIN-693537(UNTESTED) AND ATPG-693537(UNTESTED) AND TATPG-693537(UNTESTED)</Rule>
+              <Group tag="CHAIN-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::CHAIN_MCDDR_HRY_E_END_SSN_X_NOM_LFM_19G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+              <Group tag="ATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::STUCKAT_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+              <Group tag="TATPG-693537" print="true">
+                <Rule value="RESET">HRY(0)</Rule>
+                <Rule value="FAIL">HRY(0)</Rule>
+                <Rule value="PASS">HRY(1)</Rule>
+                <Rule value="IGNORE">HRY(9)</Rule>
+                <Rule value="UNTESTED">HRY(x)</Rule>
+                <HRYItem tag="HRY" expected_value="-99" token="SCN_SOC::ATSPEED_MCDDR_HRY_K_END_SSN_X_NOM_LFM_20G_HRY_RAWSTR" bitloc="6" format="BIN" />
+              </Group>
+            </Group>
+          </Group>
+        </Group>
+      </Group>
+    </Group>
+  </Group>
+</BinConfiguration>

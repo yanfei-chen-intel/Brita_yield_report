@@ -21,7 +21,8 @@ LOT_WAFER_CSV = pathlib.Path("input") / "lot_wafer.csv"
 VENV_DIR    = pathlib.Path("venv")
 OUTPUT_DIR  = pathlib.Path("output")
 
-REQUIRED_CONFIG_FIELDS = ["indicator_file", "jsl_file"]
+REQUIRED_CONFIG_FIELDS = ["tasks"]
+INPUT_DIR  = pathlib.Path("input")
 
 # lot-prefix → database source mapping (Intel sites)
 LOT_PREFIX_MAP = {
@@ -97,13 +98,32 @@ def load_config() -> dict:
     with open(CONFIG_PATH, "r", encoding="utf-8") as f:
         config = json.load(f)
 
-    # Check required fields
-    missing = [k for k in REQUIRED_CONFIG_FIELDS if not config.get(k)]
-    if missing:
-        logging.error(f"Missing or empty required config fields: {missing}")
+    # Validate top-level tasks list
+    tasks = config.get("tasks")
+    if not tasks or not isinstance(tasks, list):
+        logging.error("Config must contain a non-empty 'tasks' list.")
         sys.exit(1)
 
-    logging.info("Config validation passed ✓")
+    errors = []
+    for i, task in enumerate(tasks):
+        task_label = task.get("name") or f"tasks[{i}]"
+        if not task.get("name"):
+            errors.append(f"Task {i}: missing required field 'name'")
+        if not task.get("indicator_file"):
+            errors.append(f"Task '{task_label}': missing required field 'indicator_file'")
+        script = task.get("script")
+        if script and not script.endswith((".jsl", ".py")):
+            errors.append(
+                f"Task '{task_label}': unsupported script extension '{pathlib.Path(script).suffix}'. "
+                "Expected .jsl or .py"
+            )
+
+    if errors:
+        for e in errors:
+            logging.error(e)
+        sys.exit(1)
+
+    logging.info(f"Config validation passed ✓  ({len(tasks)} task(s): {[t['name'] for t in tasks]})")
     return config
 
 
@@ -377,66 +397,86 @@ WHERE 1=1
 
 
 # ---------------------------------------------------------------------------
-# Step 5 – Brita+ Batchmode
+# Step 5 – Brita+ Batchmode  (per task)
 # ---------------------------------------------------------------------------
-def run_brita(config: dict):
-    """Run Brita+ in Batchmode to generate units_batch.csv (synchronous)."""
+def run_brita(config: dict, task: dict, task_out_dir: pathlib.Path):
+    """Run Brita+ in Batchmode for a single task. Raises RuntimeError on failure."""
     tp_path        = pathlib.Path(config["tp_path"])
     tp_name        = config["tp_name"]
     operations     = config["operations"]
-    indicator_file = config["indicator_file"]
+    indicator_file = task["indicator_file"]
+    task_name      = task["name"]
 
-    tpl_path       = tp_path  / f"{tp_name}.tpl"
-    stpl_path      = tp_path  / f"{tp_name}.stpl"
-    indicator_path = pathlib.Path("input") / "indicator" / indicator_file
-    units_out      = OUTPUT_DIR / "units_batch.csv"
-    main_op        = operations[0]
+    tpl_path       = tp_path / f"{tp_name}.tpl"
+    stpl_path      = tp_path / f"{tp_name}.stpl"
+    indicator_path  = INPUT_DIR / indicator_file
+    units_out       = task_out_dir / f"{task_name}_units_batch.csv"
+    units_summary_out = task_out_dir / f"{task_name}_units_batch_summary.csv"
+    main_op         = operations[0]
 
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    if not indicator_path.exists():
+        raise RuntimeError(f"Indicator file not found: {indicator_path}")
 
     cmd = [
         BRITA_EXE, "Batchmode",
-        "-test_program",           tp_name,
-        "-tpl",                    str(tpl_path),
-        "-stpl",                   str(stpl_path),
-        "-lot_wafer_list",         str(LOT_WAFER_CSV),
-        "-main_operation",         main_op,
-        "-indicator_file",         str(indicator_path),
+        "-test_program",             tp_name,
+        "-tpl",                      str(tpl_path),
+        "-stpl",                     str(stpl_path),
+        "-lot_wafer_list",           str(LOT_WAFER_CSV),
+        "-main_operation",           main_op,
+        "-indicator_file",           str(indicator_path),
         "-unit_details_output_file", str(units_out),
-        "-brita_work",             str(OUTPUT_DIR),
-        "-keep_logs",              "true",
+        "-summary_output_file",      str(units_summary_out),
+        "-brita_work",               str(task_out_dir),
+        "-keep_logs",                "true",
     ]
 
-    logging.info("Running Brita+ Batchmode ...")
+    logging.info(f"[{task_name}] Running Brita+ Batchmode ...")
     logging.info("  " + " ".join(f'"{c}"' if " " in c else c for c in cmd))
 
     result = subprocess.run(cmd, capture_output=True, text=True)
     if result.stdout:
         logging.info(result.stdout)
     if result.returncode != 0:
-        logging.error(f"Brita+ failed (exit code {result.returncode}):\n{result.stderr}")
-        sys.exit(1)
+        raise RuntimeError(
+            f"Brita+ failed (exit code {result.returncode}):\n{result.stderr}"
+        )
 
-    logging.info(f"Brita+ Batchmode completed → {units_out} ✓")
+    logging.info(f"[{task_name}] Brita+ Batchmode completed → {units_out} ✓")
 
 
 # ---------------------------------------------------------------------------
-# Step 6 – JMP yield report
+# Step 6 – Script execution  (per task, .jsl → JMP, .py → Python)
 # ---------------------------------------------------------------------------
-def run_jmp(config: dict):
-    """Asynchronously launch JMP with a JSL script for yield report generation."""
-    jsl_file = pathlib.Path("input") / "jmp_script" / config["jsl_file"]
+def run_script(task: dict, task_out_dir: pathlib.Path):
+    """Launch the task script asynchronously. Raises RuntimeError on failure."""
+    script_name = task.get("script")
+    task_name   = task["name"]
 
-    if not jsl_file.exists():
-        logging.error(f"JSL script not found: {jsl_file}")
-        sys.exit(1)
+    if not script_name:
+        logging.info(f"[{task_name}] No script specified – skipping report step.")
+        return
 
-    logging.info(f"Launching JMP with script: {jsl_file}")
-    proc = subprocess.Popen([JMP_EXE, str(jsl_file)])
-    logging.info(
-        f"Plot distribution using JMP successfully for {OUTPUT_DIR} "
-        f"(PID={proc.pid})."
-    )
+    script_path = INPUT_DIR / script_name
+    if not script_path.exists():
+        raise RuntimeError(f"Script not found: {script_path}")
+
+    suffix = script_path.suffix.lower()
+    if suffix == ".jsl":
+        exe = JMP_EXE
+        label = "JMP"
+    elif suffix == ".py":
+        exe = sys.executable
+        label = "Python"
+    else:
+        raise RuntimeError(
+            f"Unsupported script extension '{suffix}' for task '{task_name}'. "
+            "Expected .jsl or .py"
+        )
+
+    logging.info(f"[{task_name}] Launching {label} script: {script_path}")
+    proc = subprocess.Popen([exe, str(script_path)])
+    logging.info(f"[{task_name}] {label} script launched (PID={proc.pid}) ✓")
 
 
 # ---------------------------------------------------------------------------
@@ -452,13 +492,44 @@ def main():
     config = load_config()
     ensure_venv()       # may re-launch; everything below runs inside venv
 
-    xeus_info = run_get_xeus_test_result(config)   # get tp_path, tp_name, operations
+    # Shared steps – failure here aborts everything
+    xeus_info = run_get_xeus_test_result(config)
     config.update(xeus_info)
     validate_tp_files(config["tp_path"], config["tp_name"])
-
     search_lot_wafer(config)
-    run_brita(config)
-    run_jmp(config)
+
+    # Per-task steps – one task failure does not stop the others
+    tasks = config["tasks"]
+    results: dict[str, str] = {}
+
+    for task in tasks:
+        task_name    = task["name"]
+        task_out_dir = OUTPUT_DIR / task_name
+        task_out_dir.mkdir(parents=True, exist_ok=True)
+        logging.info("-" * 60)
+        logging.info(f"  Task: {task_name}")
+        logging.info("-" * 60)
+        try:
+            run_brita(config, task, task_out_dir)
+            run_script(task, task_out_dir)
+            results[task_name] = "SUCCESS"
+        except Exception as e:
+            logging.error(f"[{task_name}] Task failed: {e}")
+            results[task_name] = f"FAILED: {e}"
+
+    # Summary
+    logging.info("=" * 60)
+    logging.info("  Task Summary")
+    logging.info("=" * 60)
+    for name, status in results.items():
+        icon = "✓" if status == "SUCCESS" else "✗"
+        logging.info(f"  {icon}  {name}: {status}")
+
+    failed = [n for n, s in results.items() if s != "SUCCESS"]
+    if failed:
+        logging.warning(f"{len(failed)} task(s) failed: {failed}")
+    else:
+        logging.info("All tasks completed successfully.")
 
     logging.info("=" * 60)
     logging.info("  Yield Automation Tool – Completed")

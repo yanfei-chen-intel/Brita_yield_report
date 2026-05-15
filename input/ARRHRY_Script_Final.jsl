@@ -7,9 +7,8 @@ Close All( data tables, nosave );
 Clear Log();
 //Delete Symbols();
 
-
 //dt = Current Data Table();
-dt = open("C:\Users\chenyanf\Downloads\Brita\units_batch.csv");
+dt = open( "..\output\ARRGT\ARRGT_units_batch.csv" );
 
 //Delete column
 For( i = 1, i <= N Col( dt ), i++,
@@ -126,11 +125,17 @@ Split1 << New Column( "PostScreen_Yield", Numeric, Formula((:PASS + :REPAIRABLE_
 
 //Fit_Y_by_X step1
 
+BivWin1 = New Window( "ARRGT Split1 Bivariate", <<Journal );
+
+BivWin1 << Append(
 Split1<<Bivariate(
 	Y( :PostScreen_Yield ),
 	X( :PreScreen_Yield ),
 	Fit Special( Intercept( 0 ), Slope( 1 ), {Line Color( {212, 73, 88} )} )
+)
 );
+
+BivWin1 << Save Journal( "..\output\ARRGT\ARRGT_Split1_Bivariate.jrn" );
 
 
 Split2=Split1 << Stack(
@@ -143,13 +148,18 @@ Split2=Split1 << Stack(
 Column( Split2, "Label 8" ) << set name( "BTIS-ARRAY-SIZES" );
 
 // Save Split1 and Split2 to JRN files
-Split1 << Save( "C:\Users\chenyanf\Downloads\Brita\Split1.jrn" );
+Split1 << Save( "..\output\ARRGT\ARRGT_Split1.jmp" );
 
 
 
 //Fit_Y_by_X step2
 
 
+Split2 << Save( "..\output\ARRGT\ARRGT_Split2.jmp" );
+
+BivWin2 = New Window( "ARRGT Split2 Bivariate", <<Journal );
+
+BivWin2 << Append(
 Split2<<Bivariate(
 	Y( :Data ),
 	X( :Name( "BTIS-ARRAY-SIZES" ) ),
@@ -193,6 +203,13 @@ Split2<<Bivariate(
 			)}
 		)
 	)
+)
 );
 
-Split2 << Save( "C:\Users\chenyanf\Downloads\Brita\Split2.jrn" );
+BivWin2 << Save Journal( "..\output\ARRGT\ARRGT_Split2_Bivariate.jrn" );
+
+// Export both Bivariate journals as PowerPoint
+BivWin1 << Save( "..\output\ARRGT\ARRGT_Split1_Bivariate.pptx" );
+BivWin2 << Save( "..\output\ARRGT\ARRGT_Split2_Bivariate.pptx" );
+
+//Close All( data tables, nosave );

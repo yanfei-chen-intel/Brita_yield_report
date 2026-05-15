@@ -10,6 +10,15 @@ set START_TIME=%TIME%
 echo Start Time: %START_TIME% %START_DATE%
 echo.
 
+REM Clear output folder before running
+echo Clearing output folder...
+if exist "%~dp0output" (
+    rd /s /q "%~dp0output"
+)
+mkdir "%~dp0output"
+echo Output folder cleared.
+echo.
+
 REM Run main script (venv creation and package installation are handled inside)
 echo [1/1] Running Brita_yield_gen.py...
 echo.
