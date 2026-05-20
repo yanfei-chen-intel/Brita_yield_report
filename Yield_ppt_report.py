@@ -71,6 +71,8 @@ ARRGT_SPLIT1_PPTX   = OUTPUT_DIR / "ARRGT" / "ARRGT_Split1_Bivariate.pptx"
 ARRGT_SPLIT2_PPTX   = OUTPUT_DIR / "ARRGT" / "ARRGT_Split2_Bivariate.pptx"
 ARRGT_SPLIT1_PNG    = OUTPUT_DIR / "ARRGT" / "ARRGT_Split1_Bivariate_slide1.png"
 ARRGT_SPLIT2_PNG    = OUTPUT_DIR / "ARRGT" / "ARRGT_Split2_Bivariate_slide1.png"
+MIO_FILTERED_CSV    = OUTPUT_DIR / "MIO"   / "MIO_filtered_yield.csv"
+MIO_YIELD_CSV       = OUTPUT_DIR / "MIO"   / "MIO_yield.csv"
 PPT_OUT             = OUTPUT_DIR / "Brita_yield_report.pptx"
 
 # ---------------------------------------------------------------------------
@@ -674,6 +676,114 @@ def build_ARRGT_result(prs: Presentation,
 
 
 # ---------------------------------------------------------------------------
+# Page 5 – MIO Results
+# ---------------------------------------------------------------------------
+def build_MIO_result(prs: Presentation):
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+
+    # ── Header ───────────────────────────────────────────────────────────────
+    _add_rect(slide, 0, 0, SLIDE_W, Inches(1.0), INTEL_BLUE)
+    _add_textbox(
+        slide,
+        Inches(0.3), Inches(0.15),
+        Inches(12), Inches(0.7),
+        "Brita Yield Report  |  MIO Results",
+        font_size=24, bold=True, color=WHITE,
+    )
+
+    # ── Footer ───────────────────────────────────────────────────────────────
+    _add_rect(slide, 0, SLIDE_H - Inches(0.3), SLIDE_W, Inches(0.3), INTEL_BLUE)
+    _add_textbox(
+        slide,
+        Inches(0.3), SLIDE_H - Inches(0.28),
+        Inches(12), Inches(0.25),
+        "Intel Confidential",
+        font_size=8, color=WHITE,
+    )
+
+    content_top = Inches(1.08)
+    content_h   = SLIDE_H - content_top - Inches(0.38)
+    right_w     = Inches(2.8)
+    right_left  = SLIDE_W - right_w - Inches(0.2)
+    tbl_left    = Inches(0.3)
+    tbl_w       = right_left - tbl_left - Inches(0.2)
+
+    # ── Filtered yield table ─────────────────────────────────────────────────
+    df = pd.read_csv(MIO_FILTERED_CSV, dtype=str).fillna("")
+    cols = list(df.columns)
+    n_data = len(df)
+    n_rows = n_data + 1   # header + data
+
+    col_widths = {
+        "Material":    Inches(1.4),
+        "TestProgram": Inches(1.5),
+        "Name":        Inches(2.8),
+        "Module":      Inches(1.5),
+        "Total":       Inches(0.6),
+        "#P":          Inches(0.55),
+        "#F":          Inches(0.55),
+        "#U":          Inches(0.55),
+        "%P":          Inches(0.65),
+    }
+    n_cols = len(cols)
+    row_h  = Inches(0.28)
+    tbl_h  = min(row_h * n_rows, content_h)
+
+    table = _add_table(slide, n_rows, n_cols,
+                       tbl_left, content_top, tbl_w, tbl_h)
+
+    # Set column widths
+    remaining = tbl_w
+    for ci, col in enumerate(cols):
+        w = col_widths.get(col, Inches(1.0))
+        if ci < n_cols - 1:
+            table.columns[ci].width = w
+            remaining -= w
+        else:
+            table.columns[ci].width = max(remaining, Inches(0.5))
+
+    # Header row
+    for ci, col in enumerate(cols):
+        _style_cell(table.cell(0, ci), col,
+                    font_size=9, bold=True,
+                    fg=WHITE, bg=INTEL_BLUE, align=PP_ALIGN.CENTER)
+
+    # Data rows
+    for ri, (_, row) in enumerate(df.iterrows()):
+        bg = LIGHT_BLUE if ri % 2 == 0 else WHITE
+        for ci, col in enumerate(cols):
+            val = str(row[col])
+            align = PP_ALIGN.CENTER if col in ("Total", "#P", "#F", "#U", "%P") else PP_ALIGN.LEFT
+            _style_cell(table.cell(ri + 1, ci), val,
+                        font_size=8, bold=False,
+                        fg=DARK_GREY, bg=bg, align=align)
+
+    # ── Right panel: OLE attachment placeholder ───────────────────────────────
+    _add_rect(slide, right_left, content_top, right_w, content_h, LIGHT_BLUE)
+    _add_textbox(
+        slide,
+        right_left + Inches(0.15), content_top + Inches(0.12),
+        right_w - Inches(0.3), Inches(0.30),
+        "MIO Full Yield Data",
+        font_size=10, bold=True, color=INTEL_BLUE,
+    )
+    _add_textbox(
+        slide,
+        right_left + Inches(0.15), content_top + Inches(0.48),
+        right_w - Inches(0.3), Inches(0.22),
+        "File: MIO_yield.csv",
+        font_size=8, bold=False, color=MID_GREY,
+    )
+    _add_textbox(
+        slide,
+        right_left + Inches(0.15), content_top + Inches(0.72),
+        right_w - Inches(0.3), Inches(0.22),
+        "Double-click the icon below to open the data",
+        font_size=8, bold=False, color=MID_GREY,
+    )
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 def main():
@@ -709,16 +819,23 @@ def main():
                        img1=ARRGT_SPLIT1_PNG if ARRGT_SPLIT1_PNG.exists() else None,
                        img2=ARRGT_SPLIT2_PNG if ARRGT_SPLIT2_PNG.exists() else None)
 
-    prs.save(PPT_OUT)
-    print(f"Report saved → {PPT_OUT}")
+    print("[page 5] Checking required files...")
+    _wait_for_files([MIO_FILTERED_CSV, MIO_YIELD_CSV], check_period, check_count)
+    build_MIO_result(prs)
 
-    # Embed OLE attachments (paths are relative; resolved to absolute for COM only)
+    prs.save(PPT_OUT)
+    print(f"Report saved -> {PPT_OUT}")
+
+    # Embed OLE attachments (COM requires absolute paths internally;
+    # path constants above are all relative to the working directory)
     _embed_csv_ole(PPT_OUT, SOC_SCAN_HRY_XLSX,   slide_index=1)
     _embed_csv_ole(PPT_OUT, MBIST_FILTERED_CSV,  slide_index=2)
     _embed_csv_ole(PPT_OUT, ARRGT_SPLIT1_JRN, slide_index=3,
                    left_in=0.35, top_in=5.5, width_in=2.2, height_in=1.6)
     _embed_csv_ole(PPT_OUT, ARRGT_SPLIT2_JRN, slide_index=3,
                    left_in=6.95, top_in=5.5, width_in=2.2, height_in=1.6)
+    _embed_csv_ole(PPT_OUT, MIO_YIELD_CSV, slide_index=4,
+                   left_in=10.55, top_in=1.95, width_in=2.2, height_in=1.6)
 
 
 if __name__ == "__main__":

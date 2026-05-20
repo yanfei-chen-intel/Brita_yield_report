@@ -1,0 +1,72 @@
+@ Report : PLUS_SORT_INSTANCE
+
+
+####################
+@ FilterSet : SORT_PLUS_LOT_OPERATION
+####################
+
+@ Domain : PreAssembly
+@ Apply all to Parameter : NO
+@ Attributes : 
+
+####################
+@ Parameters : SORT_PLUS_LOT_OP
+####################
+
+
+@ Parameters Group : String
+# Group Settings :  [ Data Type Position = None; Spm Option = False;  ] 
+	@@ "0|TRACEID*" : 
+
+@ Parameters Group : Bin
+	@@ "0|FUNCTIONAL_BIN" : 
+	@@ "1|DATA_BIN" : 
+	@@ "2|INTERFACE_BIN" : 
+
+@ Parameters Group : Session Data
+	@@ "0|Lot" : 
+	@@ "1|LOTS End Date Time" : 
+	@@ "2|Program Name" : 
+	@@ "3|Facility" : 
+	@@ "4|Package" : 
+	@@ "5|DevRevStep" : 
+	@@ "6|Within LOTS Sequence Num" : 
+	@@ "7|Engineering ID" : 
+	@@ "8|LATO Start WW" : 
+	@@ "9|Unit Testing Seq Key" : 
+	@@ "10|Within SubFlowStep Seq Num" : 
+	@@ "11|Within SubFlowStep Latest Flag" : 
+	@@ "12|Within LATO Latest Flag" : 
+
+@ Parameters Group : Session Attribute
+	@@ "0|CURRENT_PROCESS_STEP" : 
+	@@ "1|TPLPATH" : 
+	@@ "2|STPLPATH" : 
+	@@ "3|LOCATIONGROUPFILE" : 
+	@@ "4|ENVPATH" : 
+	@@ "5|CURRENT_PROCESS_TYPE" : 
+	@@ "6|DATA_SOURCE_PROGRAM" : 
+	@@ "7|BRITA_VERSION" : 
+
+####################
+@ Report Format
+####################
+
+@ Data Tracking Level : Units
+@ Format : Split
+@ Report Output Format : Csv
+@ Naming Convention : Test Name, Operation
+@ Columns Order : Type = Alphabetical; 
+@ Pivot SSID : NO
+@ Chunk Files : NO
+@ Stack Session Data : NO
+@ Drop Original Unparsed Column : NO
+
+
+
+
+####################
+@ Post Processing Definition - Please IGNORE
+####################
+
+

@@ -6,18 +6,34 @@
   "tasks": [
     {
       "name": "ARRGT",
+      "type": "Brita",
       "indicator_file": "bmgg31_brita_type2_indicator_arraygt.xml",
       "script": "ARRHRY_Script_Final.jsl"
     },
     {
       "name": "MBIST",
+      "type": "Brita",
       "indicator_file": "MBIST_G31.xml",
       "script": "Brita_MBIST.py"
     },
     {
       "name": "SOC_SCAN",
+      "type": "Brita",
       "indicator_file": "brita_type2_indicator_soc_scan_g31.xml",
       "script": "Brita_BMG.py"
+    },
+    {
+      "name": "MIO",
+      "type": "Plus",
+      "script": "MIO_yield_gen.py",
+      "filter_dict": {
+        "CLK": ["MIN"],
+        "MIO": ["NOM"],
+        "SIO_BSCAN": ["NOM"],
+        "SIO_VIXVOX": ["NOM"],
+        "SIO_PCIE": ["NOM"],
+        "SIO_LEAKAGE": ["MAX"]
+      }
     }
 
   ]

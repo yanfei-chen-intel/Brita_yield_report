@@ -18,7 +18,8 @@ GetXeusTestResult → DB Query → Brita+ Batchmode → JMP Yield Report
 
 ```
 Brita_yield_report/
-├── Brita_yield_gen.py
+├── Yield_analysis_gen.py
+├── Yield_ppt_report.py
 ├── run_Brita_yield_gen.bat  # Windows launcher (double-click to run)
 ├── requirements.txt
 ├── GetXeusTestResult/       # GetXeusTestResult.exe and config files
@@ -67,12 +68,12 @@ Double-click **`run_Brita_yield_gen.bat`** or run it from a terminal:
 run_Brita_yield_gen.bat
 ```
 
-The batch file launches `Brita_yield_gen.py`, displays start/end timestamps and total duration, and pauses at the end so you can review the output before the window closes.
+The batch file launches `Yield_analysis_gen.py`, displays start/end timestamps and total duration, and pauses at the end so you can review the output before the window closes.
 
 ### Command Line
 
 ```bash
-python Brita_yield_gen.py
+python Yield_analysis_gen.py
 ```
 
 On first run the script will automatically:

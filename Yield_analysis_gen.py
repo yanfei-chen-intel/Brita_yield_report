@@ -16,6 +16,8 @@ import pathlib
 BRITA_EXE   = r"C:\Program Files\Brita+\BRITA+.exe"
 JMP_EXE     = r"C:\Program Files\SAS\JMPPRO\17\jmp.exe"
 XEUS_EXE    = pathlib.Path("GetXeusTestResult") / "ApiSamples.GetXeusTestResult.exe"
+AQUA_EXE    = pathlib.Path(r"\\PGSAPP3301.gar.corp.intel.com\Installer\AquaHbase\AquaCMDClient\Client\AquaCmdLine.exe")
+TTD_EXE     = pathlib.Path(r"\\amr.corp.intel.com\ec\proj\MDO\Global\YBSP\TraceTestData\Prod\TraceTestData.exe")
 CONFIG_PATH = pathlib.Path("input") / "config.json"
 LOT_WAFER_CSV = pathlib.Path("input") / "lot_wafer.csv"
 VENV_DIR    = pathlib.Path("venv")
@@ -107,10 +109,15 @@ def load_config() -> dict:
     errors = []
     for i, task in enumerate(tasks):
         task_label = task.get("name") or f"tasks[{i}]"
+        task_type  = task.get("type", "")
         if not task.get("name"):
             errors.append(f"Task {i}: missing required field 'name'")
-        if not task.get("indicator_file"):
-            errors.append(f"Task '{task_label}': missing required field 'indicator_file'")
+        if task_type not in ("Brita", "Plus"):
+            errors.append(
+                f"Task '{task_label}': 'type' must be 'Brita' or 'Plus', got '{task_type}'"
+            )
+        if task_type == "Brita" and not task.get("indicator_file"):
+            errors.append(f"Task '{task_label}': Brita task requires 'indicator_file'")
         script = task.get("script")
         if script and not script.endswith((".jsl", ".py")):
             errors.append(
@@ -449,7 +456,11 @@ def run_brita(config: dict, task: dict, task_out_dir: pathlib.Path):
 # Step 6 – Script execution  (per task, .jsl → JMP, .py → Python)
 # ---------------------------------------------------------------------------
 def run_script(task: dict, task_out_dir: pathlib.Path):
-    """Launch the task script asynchronously. Raises RuntimeError on failure."""
+    """Launch the task script. Raises RuntimeError on failure.
+    For .py scripts, passes -filter_dict if the task defines one.
+    """
+    import json as _json
+
     script_name = task.get("script")
     task_name   = task["name"]
 
@@ -463,20 +474,141 @@ def run_script(task: dict, task_out_dir: pathlib.Path):
 
     suffix = script_path.suffix.lower()
     if suffix == ".jsl":
-        exe = JMP_EXE
+        cmd   = [JMP_EXE, str(script_path)]
         label = "JMP"
+        proc  = subprocess.Popen(cmd)
+        logging.info(f"[{task_name}] {label} script launched (PID={proc.pid}) ✓")
     elif suffix == ".py":
-        exe = sys.executable
+        cmd = [sys.executable, str(script_path)]
+        cmd.extend(["-output_dir", str(task_out_dir)])
+        filter_dict = task.get("filter_dict", {})
+        if filter_dict:
+            cmd.extend(["-filter_dict", _json.dumps(filter_dict)])
+            logging.info(f"[{task_name}] Passing filter_dict with {len(filter_dict)} entries")
         label = "Python"
+        logging.info(f"[{task_name}] Running {label} script: {script_path}")
+        result = subprocess.run(cmd, capture_output=True, text=True)
+        if result.stdout:
+            logging.info(result.stdout)
+        if result.returncode != 0:
+            raise RuntimeError(
+                f"[{task_name}] Script failed (exit {result.returncode}):\n{result.stderr}"
+            )
+        logging.info(f"[{task_name}] {label} script completed ✓")
     else:
         raise RuntimeError(
             f"Unsupported script extension '{suffix}' for task '{task_name}'. "
             "Expected .jsl or .py"
         )
 
-    logging.info(f"[{task_name}] Launching {label} script: {script_path}")
-    proc = subprocess.Popen([exe, str(script_path)])
-    logging.info(f"[{task_name}] {label} script launched (PID={proc.pid}) ✓")
+
+# ---------------------------------------------------------------------------
+# Step 5b – Plus pipeline  (AquaCmdLine → TraceTestData → post-script)
+# ---------------------------------------------------------------------------
+def run_plus(config: dict, task: dict, task_out_dir: pathlib.Path):
+    """Run the Plus instance-level data collection pipeline for a single task."""
+    import pandas as pd
+
+    task_name = task["name"]
+
+    # ── Read lot / wafer from lot_wafer.csv ──────────────────────────────────
+    df_lw = pd.read_csv(LOT_WAFER_CSV, dtype=str)
+    lots  = df_lw["Lot"].dropna().str.strip().tolist()
+    if not lots:
+        raise RuntimeError(f"[{task_name}] No lot IDs found in {LOT_WAFER_CSV}")
+    lots_str = ",".join(lots)
+
+    has_wafer = (
+        "Wafer" in df_lw.columns
+        and df_lw["Wafer"].apply(lambda w: str(w).strip() not in ("", "nan")).any()
+    )
+    ults_str = ""
+    if has_wafer:
+        ult_parts = []
+        for _, row in df_lw.iterrows():
+            lot   = str(row["Lot"]).strip()   if pd.notna(row.get("Lot"))   else ""
+            wafer = str(row["Wafer"]).strip() if pd.notna(row.get("Wafer")) else ""
+            if lot and wafer and wafer not in ("", "nan"):
+                ult_parts.append(f"{lot},{wafer}")
+        ults_str = ";".join(ult_parts)
+
+    operations     = config.get("operations", [])
+    operations_str = ",".join(str(op) for op in operations)
+
+    # ── Step a: AquaCmdLine.exe ───────────────────────────────────────────────
+    aqua_out      = task_out_dir / "aqua_result.csv"
+    ttd_out       = task_out_dir / "ttd_result.csv"
+
+    try:
+        aqua_accessible = AQUA_EXE.exists()
+    except OSError:
+        aqua_accessible = False
+    if not aqua_accessible:
+        raise RuntimeError(
+            f"[{task_name}] AquaCmdLine.exe not accessible: {AQUA_EXE}\n"
+            "Please verify network connectivity to PGSAPP3301.gar.corp.intel.com"
+        )
+
+    report_config = INPUT_DIR / "PLUS_SORT_INSTANCE.txt"
+    if not report_config.exists():
+        raise RuntimeError(f"[{task_name}] Report config not found: {report_config}")
+
+    cmd_aqua = [
+        str(AQUA_EXE),
+        "-aquaServer",    "AMR",
+        "-reportConfig",  str(report_config),
+        "-outputFileName", str(aqua_out),
+        "-lots",           lots_str,
+        "-operations",     operations_str,
+    ]
+    if has_wafer and ults_str:
+        cmd_aqua.extend(["-ults", ults_str])
+
+    logging.info(f"[{task_name}] Running AquaCmdLine ...")
+    logging.info("  " + " ".join(f'"{c}"' if " " in c else c for c in cmd_aqua))
+    result = subprocess.run(cmd_aqua, capture_output=True, text=True)
+    if result.stdout:
+        logging.info(result.stdout)
+    if result.returncode != 0:
+        raise RuntimeError(
+            f"[{task_name}] AquaCmdLine failed (exit {result.returncode}):\n{result.stderr}"
+        )
+    logging.info(f"[{task_name}] AquaCmdLine completed → {aqua_out} ✓")
+
+    # ── Step b: TraceTestData.exe ─────────────────────────────────────────────
+    try:
+        ttd_accessible = TTD_EXE.exists()
+    except OSError:
+        ttd_accessible = False
+    if not ttd_accessible:
+        raise RuntimeError(
+            f"[{task_name}] TraceTestData.exe not accessible: {TTD_EXE}\n"
+            "Please verify network connectivity to amr.corp.intel.com"
+        )
+
+    cmd_ttd = [
+        str(TTD_EXE),
+        "--data", "type", "=", "instance", "pass", "fail",
+        "--input", "file", "=", str(aqua_out),
+        "--output", "csv", "=", str(ttd_out),
+        "--result", "columns", "=", "port,pass",
+        "--material", "type", "=", "Xeus",
+    ]
+
+    logging.info(f"[{task_name}] Running TraceTestData ...")
+    logging.info("  " + " ".join(f'"{c}"' if " " in c else c for c in cmd_ttd))
+    result = subprocess.run(cmd_ttd, capture_output=True, text=True)
+    if result.stdout:
+        logging.info(result.stdout)
+    if result.stderr:
+        logging.warning(result.stderr)
+    # TTD exits with 0 even on failure — verify output file was actually created
+    if not ttd_out.exists():
+        raise RuntimeError(
+            f"[{task_name}] TraceTestData did not produce output file: {ttd_out}\n"
+            f"stdout: {result.stdout.strip()}"
+        )
+    logging.info(f"[{task_name}] TraceTestData completed → {ttd_out} ✓")
 
 
 # ---------------------------------------------------------------------------
@@ -510,7 +642,13 @@ def main():
         logging.info(f"  Task: {task_name}")
         logging.info("-" * 60)
         try:
-            run_brita(config, task, task_out_dir)
+            task_type = task.get("type", "Brita")
+            if task_type == "Brita":
+                run_brita(config, task, task_out_dir)
+            elif task_type == "Plus":
+                run_plus(config, task, task_out_dir)
+            else:
+                raise RuntimeError(f"Unknown task type: '{task_type}'")
             run_script(task, task_out_dir)
             results[task_name] = "SUCCESS"
         except Exception as e:

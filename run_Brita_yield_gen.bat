@@ -1,6 +1,6 @@
 @echo off
 echo ========================================
-echo   Brita Yield Report Generation
+echo   Yield Analysis Report Generation
 echo ========================================
 echo.
 
@@ -20,11 +20,11 @@ echo Output folder cleared.
 echo.
 
 REM Run main script (venv creation and package installation are handled inside)
-echo [1/1] Running Brita_yield_gen.py...
+echo [1/1] Running Yield_analysis_gen.py...
 echo.
-python "%~dp0Brita_yield_gen.py"
+python "%~dp0Yield_analysis_gen.py"
 if %ERRORLEVEL% NEQ 0 (
-    echo ERROR: Brita_yield_gen.py execution failed
+    echo ERROR: Yield_analysis_gen.py execution failed
     goto :error
 )
 
