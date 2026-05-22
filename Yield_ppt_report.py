@@ -826,12 +826,13 @@ def build_MIO_result(prs: Presentation):
 
 
 # ---------------------------------------------------------------------------
-# Page 6 – SCN_GT / SCN_GT_ATPG / SCN_GT_TATPG Results
+# Pages 6/7/8 – SCN_GT / SCN_GT_ATPG / SCN_GT_TATPG Results (one page each)
 # ---------------------------------------------------------------------------
 def build_SCN_GT_result(prs: Presentation,
-                        img_gt:    pathlib.Path = None,
-                        img_atpg:  pathlib.Path = None,
-                        img_tatpg: pathlib.Path = None):
+                        title:    str,
+                        jrn_name: str,
+                        img:      pathlib.Path = None):
+    """Add a single full-width slide for one SCN_GT variant."""
     slide = prs.slides.add_slide(prs.slide_layouts[6])
 
     # ── Header ───────────────────────────────────────────────────────────────
@@ -840,7 +841,7 @@ def build_SCN_GT_result(prs: Presentation,
         slide,
         Inches(0.3), Inches(0.15),
         Inches(12), Inches(0.7),
-        "Brita Yield Report  |  SCN_GT Scan Yield Results",
+        f"Brita Yield Report  |  {title}",
         font_size=24, bold=True, color=WHITE,
     )
 
@@ -854,49 +855,41 @@ def build_SCN_GT_result(prs: Presentation,
         font_size=8, color=WHITE,
     )
 
-    content_top = Inches(1.08)
-    content_h   = SLIDE_H - content_top - Inches(0.38)
-    panel_w     = Inches(4.17)
-    gap         = Inches(0.15)
-    left1       = Inches(0.2)
-    left2       = left1 + panel_w + gap
-    left3       = left2 + panel_w + gap
-    img_top     = content_top + Inches(0.95)
-    img_h       = Inches(3.8)
-    img_w       = panel_w - Inches(0.1)
+    content_top  = Inches(1.08)
+    content_h    = SLIDE_H - content_top - Inches(0.38)
 
-    panels = [
-        (left1, "SCN_GT Yield Analysis",        "SCN_GT_yield_graph.jrn",        img_gt),
-        (left2, "SCN_GT_ATPG Yield Analysis",   "SCN_GT_ATPG_yield_graph.jrn",   img_atpg),
-        (left3, "SCN_GT_TATPG Yield Analysis",  "SCN_GT_TATPG_yield_graph.jrn",  img_tatpg),
-    ]
+    # ── Image (left ~64%, mirrors SOC_SCAN chart area) ───────────────────────
+    img_left = Inches(0.2)
+    img_w    = Inches(8.4)
+    if img and img.exists():
+        slide.shapes.add_picture(str(img), img_left, content_top, img_w, content_h)
 
-    for left, title, jrn_name, img in panels:
-        _add_rect(slide, left, content_top, panel_w, content_h, LIGHT_BLUE)
-        _add_textbox(
-            slide,
-            left + Inches(0.15), content_top + Inches(0.12),
-            panel_w - Inches(0.3), Inches(0.30),
-            title,
-            font_size=10, bold=True, color=INTEL_BLUE,
-        )
-        _add_textbox(
-            slide,
-            left + Inches(0.15), content_top + Inches(0.48),
-            panel_w - Inches(0.3), Inches(0.22),
-            f"File: {jrn_name}",
-            font_size=8, bold=False, color=MID_GREY,
-        )
-        _add_textbox(
-            slide,
-            left + Inches(0.15), content_top + Inches(0.72),
-            panel_w - Inches(0.3), Inches(0.22),
-            "Double-click the icon below to open in JMP",
-            font_size=8, bold=False, color=MID_GREY,
-        )
-        if img and img.exists():
-            slide.shapes.add_picture(str(img),
-                                     left + Inches(0.1), img_top, img_w, img_h)
+    # ── Attachment panel (right ~34%, same as SOC_SCAN) ──────────────────────
+    attach_left = Inches(8.8)
+    attach_w    = Inches(4.3)
+
+    _add_rect(slide, attach_left, content_top, attach_w, content_h, LIGHT_BLUE)
+    _add_textbox(
+        slide,
+        attach_left + Inches(0.15), content_top + Inches(0.12),
+        attach_w - Inches(0.3), Inches(0.30),
+        f"{title} Detail Data",
+        font_size=10, bold=True, color=INTEL_BLUE,
+    )
+    _add_textbox(
+        slide,
+        attach_left + Inches(0.15), content_top + Inches(0.48),
+        attach_w - Inches(0.3), Inches(0.22),
+        f"File: {jrn_name}",
+        font_size=9, bold=False, color=MID_GREY,
+    )
+    _add_textbox(
+        slide,
+        attach_left + Inches(0.15), content_top + Inches(0.72),
+        attach_w - Inches(0.3), Inches(0.22),
+        "Double-click the icon below to open in JMP",
+        font_size=8, bold=False, color=MID_GREY,
+    )
 
 
 # ---------------------------------------------------------------------------
@@ -939,24 +932,29 @@ def main():
     # _wait_for_files([MIO_FILTERED_CSV, MIO_YIELD_CSV], check_period, check_count)
     # build_MIO_result(prs)
 
-    print("[page 6] Checking required files...")
+    print("[pages 6-8] Checking required files...")
     _wait_for_files([SCN_GT_JRN, SCN_GT_ATPG_JRN, SCN_GT_TATPG_JRN,
                      SCN_GT_PPTX, SCN_GT_ATPG_PPTX, SCN_GT_TATPG_PPTX],
                     check_period, check_count)
-    print("[page 6] Exporting slide images from SCN_GT PPTXes...")
+    print("[pages 6-8] Exporting slide images from SCN_GT PPTXes...")
     _export_slide_as_image(SCN_GT_PPTX,       SCN_GT_PNG)
     _export_slide_as_image(SCN_GT_ATPG_PPTX,  SCN_GT_ATPG_PNG)
     _export_slide_as_image(SCN_GT_TATPG_PPTX, SCN_GT_TATPG_PNG)
-    _crop_whitespace(SCN_GT_PNG)
-    _crop_whitespace(SCN_GT_ATPG_PNG)
-    _crop_whitespace(SCN_GT_TATPG_PNG)
-    scn_gt_slide_index = len(prs.slides)   # 0-based index of the slide about to be added
-    build_SCN_GT_result(
-        prs,
-        img_gt    = SCN_GT_PNG       if SCN_GT_PNG.exists()       else None,
-        img_atpg  = SCN_GT_ATPG_PNG  if SCN_GT_ATPG_PNG.exists()  else None,
-        img_tatpg = SCN_GT_TATPG_PNG if SCN_GT_TATPG_PNG.exists() else None,
-    )
+    # _crop_whitespace(SCN_GT_PNG)
+    # _crop_whitespace(SCN_GT_ATPG_PNG)
+    # _crop_whitespace(SCN_GT_TATPG_PNG)
+
+    scn_gt_idx       = len(prs.slides)
+    build_SCN_GT_result(prs, "SCN_GT Yield Analysis",       "SCN_GT_yield_graph.jrn",
+                        SCN_GT_PNG       if SCN_GT_PNG.exists()       else None)
+
+    scn_gt_atpg_idx  = len(prs.slides)
+    build_SCN_GT_result(prs, "SCN_GT_ATPG Yield Analysis",  "SCN_GT_ATPG_yield_graph.jrn",
+                        SCN_GT_ATPG_PNG  if SCN_GT_ATPG_PNG.exists()  else None)
+
+    scn_gt_tatpg_idx = len(prs.slides)
+    build_SCN_GT_result(prs, "SCN_GT_TATPG Yield Analysis", "SCN_GT_TATPG_yield_graph.jrn",
+                        SCN_GT_TATPG_PNG if SCN_GT_TATPG_PNG.exists() else None)
 
     prs.save(PPT_OUT)
     print(f"Report saved -> {PPT_OUT}")
@@ -971,12 +969,12 @@ def main():
     #                left_in=6.95, top_in=5.5, width_in=2.2, height_in=1.6)
     # _embed_csv_ole(PPT_OUT, MIO_YIELD_CSV, slide_index=4,
     #                left_in=10.55, top_in=1.95, width_in=2.2, height_in=1.6)
-    _embed_csv_ole(PPT_OUT, SCN_GT_JRN,       slide_index=scn_gt_slide_index,
-                   left_in=0.35,  top_in=6.0, width_in=2.2, height_in=1.1)
-    _embed_csv_ole(PPT_OUT, SCN_GT_ATPG_JRN,  slide_index=scn_gt_slide_index,
-                   left_in=4.67,  top_in=6.0, width_in=2.2, height_in=1.1)
-    _embed_csv_ole(PPT_OUT, SCN_GT_TATPG_JRN, slide_index=scn_gt_slide_index,
-                   left_in=8.99,  top_in=6.0, width_in=2.2, height_in=1.1)
+    _embed_csv_ole(PPT_OUT, SCN_GT_JRN,       slide_index=scn_gt_idx,
+                   left_in=8.8, top_in=2.8, width_in=2.2, height_in=1.1)
+    _embed_csv_ole(PPT_OUT, SCN_GT_ATPG_JRN,  slide_index=scn_gt_atpg_idx,
+                   left_in=8.8, top_in=2.8, width_in=2.2, height_in=1.1)
+    _embed_csv_ole(PPT_OUT, SCN_GT_TATPG_JRN, slide_index=scn_gt_tatpg_idx,
+                   left_in=8.8, top_in=2.8, width_in=2.2, height_in=1.1)
 
 
 if __name__ == "__main__":
