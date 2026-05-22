@@ -71,6 +71,15 @@ ARRGT_SPLIT1_PPTX   = OUTPUT_DIR / "ARRGT" / "ARRGT_Split1_Bivariate.pptx"
 ARRGT_SPLIT2_PPTX   = OUTPUT_DIR / "ARRGT" / "ARRGT_Split2_Bivariate.pptx"
 ARRGT_SPLIT1_PNG    = OUTPUT_DIR / "ARRGT" / "ARRGT_Split1_Bivariate_slide1.png"
 ARRGT_SPLIT2_PNG    = OUTPUT_DIR / "ARRGT" / "ARRGT_Split2_Bivariate_slide1.png"
+SCN_GT_JRN          = OUTPUT_DIR / "SCN_GT"       / "SCN_GT_yield_graph.jrn"
+SCN_GT_PPTX         = OUTPUT_DIR / "SCN_GT"       / "SCN_GT_yield_graph.pptx"
+SCN_GT_PNG          = OUTPUT_DIR / "SCN_GT"       / "SCN_GT_yield_graph_slide1.png"
+SCN_GT_ATPG_JRN     = OUTPUT_DIR / "SCN_GT_ATPG"  / "SCN_GT_ATPG_yield_graph.jrn"
+SCN_GT_ATPG_PPTX    = OUTPUT_DIR / "SCN_GT_ATPG"  / "SCN_GT_ATPG_yield_graph.pptx"
+SCN_GT_ATPG_PNG     = OUTPUT_DIR / "SCN_GT_ATPG"  / "SCN_GT_ATPG_yield_graph_slide1.png"
+SCN_GT_TATPG_JRN    = OUTPUT_DIR / "SCN_GT_TATPG" / "SCN_GT_TATPG_yield_graph.jrn"
+SCN_GT_TATPG_PPTX   = OUTPUT_DIR / "SCN_GT_TATPG" / "SCN_GT_TATPG_yield_graph.pptx"
+SCN_GT_TATPG_PNG    = OUTPUT_DIR / "SCN_GT_TATPG" / "SCN_GT_TATPG_yield_graph_slide1.png"
 MIO_FILTERED_CSV    = OUTPUT_DIR / "MIO"   / "MIO_filtered_yield.csv"
 MIO_YIELD_CSV       = OUTPUT_DIR / "MIO"   / "MIO_yield.csv"
 PPT_OUT             = OUTPUT_DIR / "Brita_yield_report.pptx"
@@ -556,7 +565,7 @@ def build_MBIST_result(prs: Presentation):
 
 
 def _export_slide_as_image(src_pptx: pathlib.Path, out_png: pathlib.Path,
-                            width_px: int = 1600, height_px: int = 900) -> bool:
+                            width_px: int = 2400, height_px: int = 1350) -> bool:
     """Export the first slide of *src_pptx* to *out_png* via PowerPoint COM."""
     try:
         import win32com.client
@@ -580,6 +589,39 @@ def _export_slide_as_image(src_pptx: pathlib.Path, out_png: pathlib.Path,
     except Exception as exc:
         print(f"  [warn] Slide export failed: {exc}")
         return False
+    finally:
+        try:
+            app.Quit()
+        except Exception:
+            pass
+
+
+def _crop_whitespace(img_path: pathlib.Path, padding: int = 20) -> pathlib.Path:
+    """Crop white/near-white margins from *img_path* in-place using PIL.
+
+    Returns the same path.  Falls back silently if PIL is unavailable.
+    """
+    try:
+        from PIL import Image, ImageChops
+    except ImportError:
+        print("  [warn] Pillow not available – skipping whitespace crop.")
+        return img_path
+    if not img_path.exists():
+        return img_path
+    img = Image.open(img_path).convert("RGB")
+    # Build a solid white image of the same size and diff against it
+    bg = Image.new("RGB", img.size, (255, 255, 255))
+    diff = ImageChops.difference(img, bg)
+    bbox = diff.getbbox()          # (left, upper, right, lower) of non-white region
+    if bbox:
+        l = max(0,            bbox[0] - padding)
+        u = max(0,            bbox[1] - padding)
+        r = min(img.width,    bbox[2] + padding)
+        b = min(img.height,   bbox[3] + padding)
+        img = img.crop((l, u, r, b))
+    img.save(img_path)
+    print(f"  Whitespace cropped → {img_path.name}  ({img.width}×{img.height})")
+    return img_path
 
 
 # ---------------------------------------------------------------------------
@@ -784,6 +826,80 @@ def build_MIO_result(prs: Presentation):
 
 
 # ---------------------------------------------------------------------------
+# Page 6 – SCN_GT / SCN_GT_ATPG / SCN_GT_TATPG Results
+# ---------------------------------------------------------------------------
+def build_SCN_GT_result(prs: Presentation,
+                        img_gt:    pathlib.Path = None,
+                        img_atpg:  pathlib.Path = None,
+                        img_tatpg: pathlib.Path = None):
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+
+    # ── Header ───────────────────────────────────────────────────────────────
+    _add_rect(slide, 0, 0, SLIDE_W, Inches(1.0), INTEL_BLUE)
+    _add_textbox(
+        slide,
+        Inches(0.3), Inches(0.15),
+        Inches(12), Inches(0.7),
+        "Brita Yield Report  |  SCN_GT Scan Yield Results",
+        font_size=24, bold=True, color=WHITE,
+    )
+
+    # ── Footer ───────────────────────────────────────────────────────────────
+    _add_rect(slide, 0, SLIDE_H - Inches(0.3), SLIDE_W, Inches(0.3), INTEL_BLUE)
+    _add_textbox(
+        slide,
+        Inches(0.3), SLIDE_H - Inches(0.28),
+        Inches(12), Inches(0.25),
+        "Intel Confidential",
+        font_size=8, color=WHITE,
+    )
+
+    content_top = Inches(1.08)
+    content_h   = SLIDE_H - content_top - Inches(0.38)
+    panel_w     = Inches(4.17)
+    gap         = Inches(0.15)
+    left1       = Inches(0.2)
+    left2       = left1 + panel_w + gap
+    left3       = left2 + panel_w + gap
+    img_top     = content_top + Inches(0.95)
+    img_h       = Inches(3.8)
+    img_w       = panel_w - Inches(0.1)
+
+    panels = [
+        (left1, "SCN_GT Yield Analysis",        "SCN_GT_yield_graph.jrn",        img_gt),
+        (left2, "SCN_GT_ATPG Yield Analysis",   "SCN_GT_ATPG_yield_graph.jrn",   img_atpg),
+        (left3, "SCN_GT_TATPG Yield Analysis",  "SCN_GT_TATPG_yield_graph.jrn",  img_tatpg),
+    ]
+
+    for left, title, jrn_name, img in panels:
+        _add_rect(slide, left, content_top, panel_w, content_h, LIGHT_BLUE)
+        _add_textbox(
+            slide,
+            left + Inches(0.15), content_top + Inches(0.12),
+            panel_w - Inches(0.3), Inches(0.30),
+            title,
+            font_size=10, bold=True, color=INTEL_BLUE,
+        )
+        _add_textbox(
+            slide,
+            left + Inches(0.15), content_top + Inches(0.48),
+            panel_w - Inches(0.3), Inches(0.22),
+            f"File: {jrn_name}",
+            font_size=8, bold=False, color=MID_GREY,
+        )
+        _add_textbox(
+            slide,
+            left + Inches(0.15), content_top + Inches(0.72),
+            panel_w - Inches(0.3), Inches(0.22),
+            "Double-click the icon below to open in JMP",
+            font_size=8, bold=False, color=MID_GREY,
+        )
+        if img and img.exists():
+            slide.shapes.add_picture(str(img),
+                                     left + Inches(0.1), img_top, img_w, img_h)
+
+
+# ---------------------------------------------------------------------------
 # Entry point
 # ---------------------------------------------------------------------------
 def main():
@@ -801,41 +917,66 @@ def main():
     _wait_for_files([XEUS_CSV, LOT_WAFER_RESULT], check_period, check_count)
     build_test_run_summary(prs)
 
-    print("[page 2] Checking required files...")
-    _wait_for_files([SOC_SCAN_HRY_CSV, SOC_SCAN_HRY_XLSX], check_period, check_count)
-    build_SOC_SCAN_result(prs)
+    # print("[page 2] Checking required files...")
+    # _wait_for_files([SOC_SCAN_HRY_CSV, SOC_SCAN_HRY_XLSX], check_period, check_count)
+    # build_SOC_SCAN_result(prs)
 
-    print("[page 3] Checking required files...")
-    _wait_for_files([MBIST_AGG_CSV, MBIST_FILTERED_CSV], check_period, check_count)
-    build_MBIST_result(prs)
+    # print("[page 3] Checking required files...")
+    # _wait_for_files([MBIST_AGG_CSV, MBIST_FILTERED_CSV], check_period, check_count)
+    # build_MBIST_result(prs)
 
-    print("[page 4] Checking required files...")
-    _wait_for_files([ARRGT_SPLIT1_JRN, ARRGT_SPLIT2_JRN,
-                     ARRGT_SPLIT1_PPTX, ARRGT_SPLIT2_PPTX], check_period, check_count)
-    print("[page 4] Exporting slide images from ARRGT PPTXes...")
-    _export_slide_as_image(ARRGT_SPLIT1_PPTX, ARRGT_SPLIT1_PNG)
-    _export_slide_as_image(ARRGT_SPLIT2_PPTX, ARRGT_SPLIT2_PNG)
-    build_ARRGT_result(prs,
-                       img1=ARRGT_SPLIT1_PNG if ARRGT_SPLIT1_PNG.exists() else None,
-                       img2=ARRGT_SPLIT2_PNG if ARRGT_SPLIT2_PNG.exists() else None)
+    # print("[page 4] Checking required files...")
+    # _wait_for_files([ARRGT_SPLIT1_JRN, ARRGT_SPLIT2_JRN,
+    #                  ARRGT_SPLIT1_PPTX, ARRGT_SPLIT2_PPTX], check_period, check_count)
+    # print("[page 4] Exporting slide images from ARRGT PPTXes...")
+    # _export_slide_as_image(ARRGT_SPLIT1_PPTX, ARRGT_SPLIT1_PNG)
+    # _export_slide_as_image(ARRGT_SPLIT2_PPTX, ARRGT_SPLIT2_PNG)
+    # build_ARRGT_result(prs,
+    #                    img1=ARRGT_SPLIT1_PNG if ARRGT_SPLIT1_PNG.exists() else None,
+    #                    img2=ARRGT_SPLIT2_PNG if ARRGT_SPLIT2_PNG.exists() else None)
 
-    print("[page 5] Checking required files...")
-    _wait_for_files([MIO_FILTERED_CSV, MIO_YIELD_CSV], check_period, check_count)
-    build_MIO_result(prs)
+    # print("[page 5] Checking required files...")
+    # _wait_for_files([MIO_FILTERED_CSV, MIO_YIELD_CSV], check_period, check_count)
+    # build_MIO_result(prs)
+
+    print("[page 6] Checking required files...")
+    _wait_for_files([SCN_GT_JRN, SCN_GT_ATPG_JRN, SCN_GT_TATPG_JRN,
+                     SCN_GT_PPTX, SCN_GT_ATPG_PPTX, SCN_GT_TATPG_PPTX],
+                    check_period, check_count)
+    print("[page 6] Exporting slide images from SCN_GT PPTXes...")
+    _export_slide_as_image(SCN_GT_PPTX,       SCN_GT_PNG)
+    _export_slide_as_image(SCN_GT_ATPG_PPTX,  SCN_GT_ATPG_PNG)
+    _export_slide_as_image(SCN_GT_TATPG_PPTX, SCN_GT_TATPG_PNG)
+    _crop_whitespace(SCN_GT_PNG)
+    _crop_whitespace(SCN_GT_ATPG_PNG)
+    _crop_whitespace(SCN_GT_TATPG_PNG)
+    scn_gt_slide_index = len(prs.slides)   # 0-based index of the slide about to be added
+    build_SCN_GT_result(
+        prs,
+        img_gt    = SCN_GT_PNG       if SCN_GT_PNG.exists()       else None,
+        img_atpg  = SCN_GT_ATPG_PNG  if SCN_GT_ATPG_PNG.exists()  else None,
+        img_tatpg = SCN_GT_TATPG_PNG if SCN_GT_TATPG_PNG.exists() else None,
+    )
 
     prs.save(PPT_OUT)
     print(f"Report saved -> {PPT_OUT}")
 
     # Embed OLE attachments (COM requires absolute paths internally;
     # path constants above are all relative to the working directory)
-    _embed_csv_ole(PPT_OUT, SOC_SCAN_HRY_XLSX,   slide_index=1)
-    _embed_csv_ole(PPT_OUT, MBIST_FILTERED_CSV,  slide_index=2)
-    _embed_csv_ole(PPT_OUT, ARRGT_SPLIT1_JRN, slide_index=3,
-                   left_in=0.35, top_in=5.5, width_in=2.2, height_in=1.6)
-    _embed_csv_ole(PPT_OUT, ARRGT_SPLIT2_JRN, slide_index=3,
-                   left_in=6.95, top_in=5.5, width_in=2.2, height_in=1.6)
-    _embed_csv_ole(PPT_OUT, MIO_YIELD_CSV, slide_index=4,
-                   left_in=10.55, top_in=1.95, width_in=2.2, height_in=1.6)
+    # _embed_csv_ole(PPT_OUT, SOC_SCAN_HRY_XLSX,   slide_index=1)
+    # _embed_csv_ole(PPT_OUT, MBIST_FILTERED_CSV,  slide_index=2)
+    # _embed_csv_ole(PPT_OUT, ARRGT_SPLIT1_JRN, slide_index=3,
+    #                left_in=0.35, top_in=5.5, width_in=2.2, height_in=1.6)
+    # _embed_csv_ole(PPT_OUT, ARRGT_SPLIT2_JRN, slide_index=3,
+    #                left_in=6.95, top_in=5.5, width_in=2.2, height_in=1.6)
+    # _embed_csv_ole(PPT_OUT, MIO_YIELD_CSV, slide_index=4,
+    #                left_in=10.55, top_in=1.95, width_in=2.2, height_in=1.6)
+    _embed_csv_ole(PPT_OUT, SCN_GT_JRN,       slide_index=scn_gt_slide_index,
+                   left_in=0.35,  top_in=6.0, width_in=2.2, height_in=1.1)
+    _embed_csv_ole(PPT_OUT, SCN_GT_ATPG_JRN,  slide_index=scn_gt_slide_index,
+                   left_in=4.67,  top_in=6.0, width_in=2.2, height_in=1.1)
+    _embed_csv_ole(PPT_OUT, SCN_GT_TATPG_JRN, slide_index=scn_gt_slide_index,
+                   left_in=8.99,  top_in=6.0, width_in=2.2, height_in=1.1)
 
 
 if __name__ == "__main__":

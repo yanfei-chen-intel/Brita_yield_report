@@ -34,6 +34,24 @@
         "SIO_PCIE": ["NOM"],
         "SIO_LEAKAGE": ["MAX"]
       }
+    },
+    {
+      "name": "SCN_GT",
+      "type": "Brita",
+      "indicator_file": "Test_Fake_FlopCNT.xml",
+      "script": "scan_gt_yield_gen.jsl"
+    },
+    {
+      "name": "SCN_GT_ATPG",
+      "type": "Brita",
+      "indicator_file": "Test_Fake_FlopCNT_ATPG.xml",
+      "script": "scan_gt_atpg_yield_gen.jsl"
+    },
+    {
+      "name": "SCN_GT_TATPG",
+      "type": "Brita",
+      "indicator_file": "Test_Fake_FlopCNT_TATPG.xml",
+      "script": "scan_gt_tatpg_yield_gen.jsl"
     }
 
   ]

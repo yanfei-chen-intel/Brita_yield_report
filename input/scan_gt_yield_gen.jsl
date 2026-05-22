@@ -1,0 +1,165 @@
+// ============================================================
+// scan_yield.jsl
+// ============================================================
+Names Default To Here( 1 );
+// Step 1  Open units_batch_summary.csv
+// Step 2  Filter Level == 3  and  Result in {"DFT", "PASS"}
+// Step 3  Split Indicator ("::" delimiter) → Module / RG / EID / FLOPCOUNT
+// Step 4  Compute per-indicator:
+//           pass_value          = Die_Tested   where Result=="PASS"
+//           dft_value           = Die_Per_Wafer where Result=="DFT"
+//           die_per_wafer_value = Die_Per_Wafer where Result=="PASS"
+//           actual_tested_die_count = pass_value - dft_value
+//           actual_yield            = die_per_wafer_value / actual_tested_die_count
+// Step 5  Save SCN_yield_result.csv
+// Step 6  Open Graph Builder visualisation (from Script Window.jsl)
+//
+// Paths are resolved from JMP's current default directory.
+// Before running, make sure JMP's default directory points to the repo root, or
+// edit inputPath / outputPath below directly.
+// ============================================================
+
+// ── 0. Paths ─────────────────────────────────────────────────────────────
+inputPath  = "..\output\SCN_GT\SCN_GT_units_batch_summary.csv";
+outputPath = "..\output\SCN_GT\SCN_GT_yield_result.csv";
+jrnPath    = "..\output\SCN_GT\SCN_GT_yield_graph.jrn";
+pptPath    = "..\output\SCN_GT\SCN_GT_yield_graph.pptx";
+
+// ── 1. Open source CSV ───────────────────────────────────────────────────
+dtRaw = Open( inputPath );
+
+// ── 2. Keep Level == 3 ───────────────────────────────────────────────────
+dtRaw << Select Where( :Level == 3 );
+dtL3 = dtRaw << Subset( Selected Rows( 1 ), Invisible( 1 ) );
+Close( dtRaw, No Save );
+
+// ── 3. Keep Result in {"DFT", "PASS"} ───────────────────────────────────
+dtL3 << Select Where( :Result == "DFT" | :Result == "PASS" );
+dtFilt = dtL3 << Subset( Selected Rows( 1 ), Invisible( 1 ) );
+Close( dtL3, No Save );
+
+// ── 4. Add Indicator split columns ───────────────────────────────────────
+// Indicator format: Module::RG::EID::FLOPCOUNT
+// Use a For loop to fill values directly (avoids formula/Delete Formula issues)
+dtFilt << New Column( "Module",    Character, Nominal );
+dtFilt << New Column( "RG",        Character, Nominal );
+dtFilt << New Column( "EID",       Character, Nominal );
+dtFilt << New Column( "FLOPCOUNT", Numeric,   Continuous );
+
+nFilt = N Rows( dtFilt );
+For( i = 1, i <= nFilt, i++,
+    parts = Words( Substitute( Column( dtFilt, "Indicator" )[i], "::", "|" ), "|" );
+    Column( dtFilt, "Module" )[i]    = parts[1];
+    Column( dtFilt, "RG" )[i]        = parts[2];
+    Column( dtFilt, "EID" )[i]       = parts[3];
+    Column( dtFilt, "FLOPCOUNT" )[i] = Num( parts[4] );
+);
+
+// ── 5–8. Build result using Associative Array lookup (avoids Join complexity) ──
+
+// Pass 1: index DFT rows → key "LOT|WAFER|Indicator" → Die_Per_Wafer value
+dftLookup = Associative Array();
+nFilt = N Rows( dtFilt );
+For( i = 1, i <= nFilt, i++,
+    If( Column( dtFilt, "Result" )[i] == "DFT",
+        key = Column( dtFilt, "LOT" )[i] || "|" ||
+              Char( Column( dtFilt, "WAFER" )[i] ) || "|" ||
+              Column( dtFilt, "Indicator" )[i];
+        dftLookup[key] = Column( dtFilt, "Die_Per_Wafer" )[i];
+    )
+);
+
+// Pass 2: iterate PASS rows, look up DFT value, compute yield, write result row
+dtResult = New Table( "SCN_yield_result",
+    New Column( "LOT",                     Character, Nominal ),
+    New Column( "WAFER",                   Numeric,   Continuous ),
+    New Column( "Indicator",               Character, Nominal ),
+    New Column( "Module",                  Character, Nominal ),
+    New Column( "RG",                      Character, Nominal ),
+    New Column( "EID",                     Character, Nominal ),
+    New Column( "FLOPCOUNT",               Numeric,   Continuous ),
+    New Column( "pass_value",              Numeric,   Continuous ),
+    New Column( "dft_value",               Numeric,   Continuous ),
+    New Column( "die_per_wafer_value",     Numeric,   Continuous ),
+    New Column( "actual_tested_die_count", Numeric,   Continuous ),
+    New Column( "actual_yield",            Numeric,   Continuous )
+);
+
+For( i = 1, i <= nFilt, i++,
+    If( Column( dtFilt, "Result" )[i] == "PASS",
+        lot_v  = Column( dtFilt, "LOT" )[i];
+        wav_v  = Column( dtFilt, "WAFER" )[i];
+        ind_v  = Column( dtFilt, "Indicator" )[i];
+        mod_v  = Column( dtFilt, "Module" )[i];
+        rg_v   = Column( dtFilt, "RG" )[i];
+        eid_v  = Column( dtFilt, "EID" )[i];
+        flop_v = Column( dtFilt, "FLOPCOUNT" )[i];
+        pv     = Column( dtFilt, "Die_Tested_no_Untested" )[i];
+        dpw_v  = Column( dtFilt, "Die_Per_Wafer" )[i];
+
+        key   = lot_v || "|" || Char( wav_v ) || "|" || ind_v;
+        dft_v = dftLookup[key];
+        atd   = pv - dft_v;
+        ay    = If( !Is Missing( atd ) & atd != 0, dpw_v / atd, . );
+
+        dtResult << Add Rows( 1 );
+        r = N Rows( dtResult );
+        Column( dtResult, "LOT" )[r]                     = lot_v;
+        Column( dtResult, "WAFER" )[r]                   = wav_v;
+        Column( dtResult, "Indicator" )[r]               = ind_v;
+        Column( dtResult, "Module" )[r]                  = mod_v;
+        Column( dtResult, "RG" )[r]                      = rg_v;
+        Column( dtResult, "EID" )[r]                     = eid_v;
+        Column( dtResult, "FLOPCOUNT" )[r]               = flop_v;
+        Column( dtResult, "pass_value" )[r]              = pv;
+        Column( dtResult, "dft_value" )[r]               = dft_v;
+        Column( dtResult, "die_per_wafer_value" )[r]     = dpw_v;
+        Column( dtResult, "actual_tested_die_count" )[r] = atd;
+        Column( dtResult, "actual_yield" )[r]            = ay;
+    )
+);
+Close( dtFilt, No Save );
+
+// ── 9. Save SCN_yield_result.csv ─────────────────────────────────────────
+// Ensure SCN_yield_result.csv is not open in Excel before running
+dtResult << Save( outputPath );
+
+// ── 10. Graph Builder + save as .jrn and .pptx ───────────────────────────
+
+// Count unique wafers for dynamic axis loop
+dtWafers = dtResult << Summary( Group( :WAFER ) );
+nWafers  = N Rows( dtWafers );
+Close( dtWafers, No Save );
+
+// Create Graph Builder
+gb = dtResult << Graph Builder(
+    Size( 1016, 6396 ),
+    Variables( X( :FLOPCOUNT ), Y( :actual_yield ), Page( :WAFER ), Color( :EID ) ),
+    Elements(
+        Points( X, Y, Legend( 9 ) ),
+        Smoother( X, Y, Legend( 10 ), Lambda( 0.00315210009451928 ) )
+    )
+);
+
+// Apply Y-axis scale [-0.05, 1.05] to each wafer page.
+// ScaleBox(1) is consumed by an internal non-Y-axis box, so Y-axis pages
+// start at ScaleBox(2). Loop to nWafers + 1 to cover all pages.
+For( w = 1, w <= nWafers + 1, w++,
+    gb << SendToReport(
+        Dispatch({}, "actual_yield", ScaleBox(w), {Min(-0.05), Max(1.05), Inc(0.005), Minor Ticks(1)})
+    );
+);
+
+gb << SendToReport(
+    Dispatch( {}, "400", LegendBox, {Set Wrap( 60 )} );
+);
+
+// Save to journal then export as PowerPoint
+gbWin = New Window( "SCN Yield Graph", << Journal );
+gbWin << Append( gb << Report );
+gbWin << Save Journal( jrnPath );
+gb << Save Presentation( pptPath );
+
+//close open Window
+Close All( Data Tables, NoSave );
+Clear Log();

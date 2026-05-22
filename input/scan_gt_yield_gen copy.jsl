@@ -22,6 +22,7 @@ Names Default To Here( 1 );
 // ── 0. Paths ─────────────────────────────────────────────────────────────
 inputPath  = "..\output\SCN_GT\SCN_GT_units_batch_summary.csv";
 outputPath = "..\output\SCN_GT\SCN_GT_yield_result.csv";
+jrnPath = "..\output\SCN_GT\SCN_GT_yield_graph.jrn";
 
 // ── 1. Open source CSV ───────────────────────────────────────────────────
 dtRaw = Open( inputPath );
@@ -92,7 +93,7 @@ For( i = 1, i <= nFilt, i++,
         rg_v   = Column( dtFilt, "RG" )[i];
         eid_v  = Column( dtFilt, "EID" )[i];
         flop_v = Column( dtFilt, "FLOPCOUNT" )[i];
-        pv     = Column( dtFilt, "Die_Tested" )[i];
+        pv     = Column( dtFilt, "Die_Tested_no_Untested" )[i];
         dpw_v  = Column( dtFilt, "Die_Per_Wafer" )[i];
 
         key   = lot_v || "|" || Char( wav_v ) || "|" || ind_v;
@@ -123,7 +124,7 @@ Close( dtFilt, No Save );
 dtResult << Save( outputPath );
 
 // ── 10. Graph Builder + save as .jrn ─────────────────────────────────────
-jrnPath = "..\output\SCN_GT\SCN_yield_graph.jrn";
+
 
 // Count unique wafers for dynamic axis loop
 dtWafers = dtResult << Summary( Group( :WAFER ) );
@@ -153,3 +154,7 @@ For( w = 1, w <= nWafers + 1, w++,
 gbWin = New Window( "SCN Yield Graph", << Journal );
 gbWin << Append( gb << Report );
 gbWin << Save Journal( jrnPath );
+
+//close open Window
+Close All( Data Tables, NoSave );
+Clear Log();
