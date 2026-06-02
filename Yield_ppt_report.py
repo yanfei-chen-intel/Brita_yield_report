@@ -80,8 +80,10 @@ SCN_GT_ATPG_PNG     = OUTPUT_DIR / "SCN_GT_ATPG"  / "SCN_GT_ATPG_yield_graph_sli
 SCN_GT_TATPG_JRN    = OUTPUT_DIR / "SCN_GT_TATPG" / "SCN_GT_TATPG_yield_graph.jrn"
 SCN_GT_TATPG_PPTX   = OUTPUT_DIR / "SCN_GT_TATPG" / "SCN_GT_TATPG_yield_graph.pptx"
 SCN_GT_TATPG_PNG    = OUTPUT_DIR / "SCN_GT_TATPG" / "SCN_GT_TATPG_yield_graph_slide1.png"
-MIO_FILTERED_CSV    = OUTPUT_DIR / "MIO"   / "MIO_filtered_yield.csv"
-MIO_YIELD_CSV       = OUTPUT_DIR / "MIO"   / "MIO_yield.csv"
+MIO_FILTERED_CSV    = OUTPUT_DIR / "MIO"   / "Instance_filtered_yield.csv"
+MIO_YIELD_CSV       = OUTPUT_DIR / "MIO"   / "Instance_yield.csv"
+DC_FILTERED_CSV     = OUTPUT_DIR / "DC"    / "Instance_filtered_yield.csv"
+DC_YIELD_CSV        = OUTPUT_DIR / "DC"    / "Instance_yield.csv"
 PPT_OUT             = OUTPUT_DIR / "Brita_yield_report.pptx"
 
 # ---------------------------------------------------------------------------
@@ -826,6 +828,114 @@ def build_MIO_result(prs: Presentation):
 
 
 # ---------------------------------------------------------------------------
+# Page 5b – DC Instance Yield Results
+# ---------------------------------------------------------------------------
+def build_DC_result(prs: Presentation):
+    slide = prs.slides.add_slide(prs.slide_layouts[6])
+
+    # ── Header ───────────────────────────────────────────────────────────────
+    _add_rect(slide, 0, 0, SLIDE_W, Inches(1.0), INTEL_BLUE)
+    _add_textbox(
+        slide,
+        Inches(0.3), Inches(0.15),
+        Inches(12), Inches(0.7),
+        "Brita Yield Report  |  DC Instance Yield Results",
+        font_size=24, bold=True, color=WHITE,
+    )
+
+    # ── Footer ───────────────────────────────────────────────────────────────
+    _add_rect(slide, 0, SLIDE_H - Inches(0.3), SLIDE_W, Inches(0.3), INTEL_BLUE)
+    _add_textbox(
+        slide,
+        Inches(0.3), SLIDE_H - Inches(0.28),
+        Inches(12), Inches(0.25),
+        "Intel Confidential",
+        font_size=8, color=WHITE,
+    )
+
+    content_top = Inches(1.08)
+    content_h   = SLIDE_H - content_top - Inches(0.38)
+    right_w     = Inches(2.8)
+    right_left  = SLIDE_W - right_w - Inches(0.2)
+    tbl_left    = Inches(0.3)
+    tbl_w       = right_left - tbl_left - Inches(0.2)
+
+    # ── Filtered yield table ─────────────────────────────────────────────────
+    df = pd.read_csv(DC_FILTERED_CSV, dtype=str).fillna("")
+    cols = list(df.columns)
+    n_data = len(df)
+    n_rows = n_data + 1   # header + data
+
+    col_widths = {
+        "Material":    Inches(1.4),
+        "TestProgram": Inches(1.5),
+        "Name":        Inches(2.8),
+        "Module":      Inches(1.5),
+        "Total":       Inches(0.6),
+        "#P":          Inches(0.55),
+        "#F":          Inches(0.55),
+        "#U":          Inches(0.55),
+        "%P":          Inches(0.65),
+    }
+    n_cols = len(cols)
+    row_h  = Inches(0.28)
+    tbl_h  = min(row_h * n_rows, content_h)
+
+    table = _add_table(slide, n_rows, n_cols,
+                       tbl_left, content_top, tbl_w, tbl_h)
+
+    # Set column widths
+    remaining = tbl_w
+    for ci, col in enumerate(cols):
+        w = col_widths.get(col, Inches(1.0))
+        if ci < n_cols - 1:
+            table.columns[ci].width = w
+            remaining -= w
+        else:
+            table.columns[ci].width = max(remaining, Inches(0.5))
+
+    # Header row
+    for ci, col in enumerate(cols):
+        _style_cell(table.cell(0, ci), col,
+                    font_size=9, bold=True,
+                    fg=WHITE, bg=INTEL_BLUE, align=PP_ALIGN.CENTER)
+
+    # Data rows
+    for ri, (_, row) in enumerate(df.iterrows()):
+        bg = LIGHT_BLUE if ri % 2 == 0 else WHITE
+        for ci, col in enumerate(cols):
+            val = str(row[col])
+            align = PP_ALIGN.CENTER if col in ("Total", "#P", "#F", "#U", "%P") else PP_ALIGN.LEFT
+            _style_cell(table.cell(ri + 1, ci), val,
+                        font_size=8, bold=False,
+                        fg=DARK_GREY, bg=bg, align=align)
+
+    # ── Right panel: OLE attachment placeholder ───────────────────────────────
+    _add_rect(slide, right_left, content_top, right_w, content_h, LIGHT_BLUE)
+    _add_textbox(
+        slide,
+        right_left + Inches(0.15), content_top + Inches(0.12),
+        right_w - Inches(0.3), Inches(0.30),
+        "DC Full Yield Data",
+        font_size=10, bold=True, color=INTEL_BLUE,
+    )
+    _add_textbox(
+        slide,
+        right_left + Inches(0.15), content_top + Inches(0.48),
+        right_w - Inches(0.3), Inches(0.22),
+        "File: DC_Instance_yield.csv",
+        font_size=8, bold=False, color=MID_GREY,
+    )
+    _add_textbox(
+        slide,
+        right_left + Inches(0.15), content_top + Inches(0.72),
+        right_w - Inches(0.3), Inches(0.22),
+        "Double-click the icon below to open the data",
+        font_size=8, bold=False, color=MID_GREY,
+    )
+
+
+# ---------------------------------------------------------------------------
 # Pages 6/7/8 – SCN_GT / SCN_GT_ATPG / SCN_GT_TATPG Results (one page each)
 # ---------------------------------------------------------------------------
 def build_SCN_GT_result(prs: Presentation,
@@ -932,6 +1042,11 @@ def main():
     # _wait_for_files([MIO_FILTERED_CSV, MIO_YIELD_CSV], check_period, check_count)
     # build_MIO_result(prs)
 
+    print("[page 5b] Checking required files...")
+    _wait_for_files([DC_FILTERED_CSV, DC_YIELD_CSV], check_period, check_count)
+    dc_idx = len(prs.slides)
+    build_DC_result(prs)
+
     print("[pages 6-8] Checking required files...")
     _wait_for_files([SCN_GT_JRN, SCN_GT_ATPG_JRN, SCN_GT_TATPG_JRN,
                      SCN_GT_PPTX, SCN_GT_ATPG_PPTX, SCN_GT_TATPG_PPTX],
@@ -969,6 +1084,8 @@ def main():
     #                left_in=6.95, top_in=5.5, width_in=2.2, height_in=1.6)
     # _embed_csv_ole(PPT_OUT, MIO_YIELD_CSV, slide_index=4,
     #                left_in=10.55, top_in=1.95, width_in=2.2, height_in=1.6)
+    _embed_csv_ole(PPT_OUT, DC_YIELD_CSV, slide_index=dc_idx,
+                   left_in=10.55, top_in=1.95, width_in=2.2, height_in=1.6)
     _embed_csv_ole(PPT_OUT, SCN_GT_JRN,       slide_index=scn_gt_idx,
                    left_in=8.8, top_in=2.8, width_in=2.2, height_in=1.1)
     _embed_csv_ole(PPT_OUT, SCN_GT_ATPG_JRN,  slide_index=scn_gt_atpg_idx,

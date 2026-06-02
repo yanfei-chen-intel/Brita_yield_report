@@ -12,6 +12,8 @@ python Yield_analysis_gen.py
 
 On first run, `Yield_analysis_gen.py` auto-creates a `venv/` with `--system-site-packages`, installs `requirements.txt`, then **re-launches itself inside the venv**. Subsequent runs skip installation and relaunch directly.
 
+> **Warning:** `run_Brita_yield_gen.bat` **deletes and recreates the entire `output/` folder** before each run — all previous results are lost.
+
 There are no automated tests or lint commands in this repo.
 
 ## Architecture
@@ -34,9 +36,17 @@ The pipeline has two Python entry points:
    - `"type": "Plus"` → run AquaCmdLine.exe (network share) → TraceTestData.exe (network share)
    - Then run the task's `script` (`.jsl` launches JMP asynchronously; `.py` runs synchronously and receives `-output_dir` and optional `-filter_dict` JSON args)
 
-All output lands in `output/<task_name>/`.
+All output lands in `output/<task_name>/`. The log file is written to `output/yield_automation.log`.
 
 ## Key Conventions
+
+### `input/lot_wafer.csv` format
+```csv
+Lot,Wafer
+Q503E4301,
+Q503E4302,01
+```
+Leave `Wafer` empty to query all wafers for a lot.
 
 ### `input/config.json` schema
 ```json
@@ -59,6 +69,11 @@ All output lands in `output/<task_name>/`.
 - Task `name` becomes the output subdirectory name (`output/<name>/`).
 - `indicator_file` path is resolved relative to `input/`.
 - `script` must be `.jsl` (JMP, launched async) or `.py` (Python, run sync).
+- `filter_dict` is only passed to `.py` scripts (ignored for `.jsl`).
+
+### `Yield_ppt_report.py` hardcoded task names
+The PPT generator reads from fixed output subdirectory names. Task names in `config.json` **must match** these exactly for slides to be populated:
+`SOC_SCAN`, `MBIST`, `ARRGT`, `MIO`, `SCN_GT`, `SCN_GT_ATPG`, `SCN_GT_TATPG`
 
 ### Lot prefix → database routing
 Lot ID first character determines the PyUber datasource:
